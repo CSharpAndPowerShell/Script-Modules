@@ -1,0 +1,42 @@
+﻿<Project>
+	<Version>1.0</Version>
+	<FileID>1c3c6239-5771-445b-a7a8-ec4ed6e0c4ca</FileID>
+	<ProjectType>1</ProjectType>
+	<Files>
+		<File ReferenceName="" Build="0">Set-AutoLogin.psd1</File>
+		<File ReferenceName="" Build="0">Set-AutoLogin.psm1</File>
+	</Files>
+	<OpenFiles>
+		<File>Set-AutoLogin.psd1</File>
+		<File>Set-AutoLogin.psm1</File>
+	</OpenFiles>
+	<Packager>
+		<General>
+			<PackageName/>
+			<PackageIcon/>
+			<ManifestCreation>1</ManifestCreation>
+			<CustomManifest/>
+			<DeleteDataFiles>0</DeleteDataFiles>
+			<Platform>-1</Platform>
+			<RunSTA>0</RunSTA>
+		</General>
+		<Security>
+			<Username/>
+			<Password/>
+			<SignPackage>False</SignPackage>
+			<Certificate/>
+			<CertificatePassword/>
+		</Security>
+		<Version>
+			<FileVersion/>
+			<ProductVersion/>
+			<ProductName/>
+			<Description/>
+			<Company/>
+			<Copyright/>
+			<InternalName/>
+			<OriginalFileName/>
+			<Comment/>
+		</Version>
+	</Packager>
+</Project>

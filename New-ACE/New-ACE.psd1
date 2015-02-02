@@ -1,22 +1,22 @@
 ﻿##########################################################################
-# Created on:   01/02/2015 11:30 p.m.
+# Created on:   02/02/2015 12:55 a.m.
 # Created by:   crisrc012
 #-------------------------------------------------------------------------
 # Module Manifest
 #-------------------------------------------------------------------------
-# Module Name:  Install-Program
+# Module Name:  New-ACE
 ##########################################################################
 
 @{
 
 # Script module or binary module file associated with this manifest
-ModuleToProcess = 'Install-Program.psm1'
+ModuleToProcess = 'New-ACE.psm1'
 
 # Version number of this module.
 ModuleVersion = '1.6.2.0'
 
 # ID used to uniquely identify this module
-GUID = 'fc4102b8-6cc2-40cd-ac56-e1c2cd3e6d49'
+GUID = '340bafa8-e53f-44f6-b0bb-a2053f76dcb4'
 
 # Author of this module
 Author = 'crisrc012'
@@ -91,3 +91,10 @@ FileList = @()
 PrivateData = ''
 
 }
+
+
+
+
+
+
+

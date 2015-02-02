@@ -1,22 +1,22 @@
 ﻿##########################################################################
-# Created on:   01/02/2015 11:30 p.m.
+# Created on:   02/02/2015 01:51 a.m.
 # Created by:   crisrc012
 #-------------------------------------------------------------------------
 # Module Manifest
 #-------------------------------------------------------------------------
-# Module Name:  Install-Program
+# Module Name:  Remove-User
 ##########################################################################
 
 @{
 
 # Script module or binary module file associated with this manifest
-ModuleToProcess = 'Install-Program.psm1'
+ModuleToProcess = 'Remove-User.psm1'
 
 # Version number of this module.
 ModuleVersion = '1.6.2.0'
 
 # ID used to uniquely identify this module
-GUID = 'fc4102b8-6cc2-40cd-ac56-e1c2cd3e6d49'
+GUID = '529b7d02-bf5e-4c9c-a0e5-5db1aeff395e'
 
 # Author of this module
 Author = 'crisrc012'
@@ -91,3 +91,10 @@ FileList = @()
 PrivateData = ''
 
 }
+
+
+
+
+
+
+

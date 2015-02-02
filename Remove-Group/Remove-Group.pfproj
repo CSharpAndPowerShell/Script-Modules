@@ -1,0 +1,42 @@
+﻿<Project>
+	<Version>1.0</Version>
+	<FileID>f0802246-92a2-47a5-abc5-c0cc80b71773</FileID>
+	<ProjectType>1</ProjectType>
+	<Files>
+		<File ReferenceName="" Build="0">Remove-Group.psd1</File>
+		<File ReferenceName="" Build="0">Remove-Group.psm1</File>
+	</Files>
+	<OpenFiles>
+		<File>Remove-Group.psd1</File>
+		<File>Remove-Group.psm1</File>
+	</OpenFiles>
+	<Packager>
+		<General>
+			<PackageName/>
+			<PackageIcon/>
+			<ManifestCreation>1</ManifestCreation>
+			<CustomManifest/>
+			<DeleteDataFiles>0</DeleteDataFiles>
+			<Platform>-1</Platform>
+			<RunSTA>0</RunSTA>
+		</General>
+		<Security>
+			<Username/>
+			<Password/>
+			<SignPackage>False</SignPackage>
+			<Certificate/>
+			<CertificatePassword/>
+		</Security>
+		<Version>
+			<FileVersion/>
+			<ProductVersion/>
+			<ProductName/>
+			<Description/>
+			<Company/>
+			<Copyright/>
+			<InternalName/>
+			<OriginalFileName/>
+			<Comment/>
+		</Version>
+	</Packager>
+</Project>

@@ -1,0 +1,42 @@
+﻿<Project>
+	<Version>1.0</Version>
+	<FileID>058ca5e8-b495-4ef5-85b1-e9333eef9895</FileID>
+	<ProjectType>1</ProjectType>
+	<Files>
+		<File ReferenceName="" Build="0">New-NumberList.psd1</File>
+		<File ReferenceName="" Build="0">New-NumberList.psm1</File>
+	</Files>
+	<OpenFiles>
+		<File>New-NumberList.psd1</File>
+		<File>New-NumberList.psm1</File>
+	</OpenFiles>
+	<Packager>
+		<General>
+			<PackageName/>
+			<PackageIcon/>
+			<ManifestCreation>1</ManifestCreation>
+			<CustomManifest/>
+			<DeleteDataFiles>0</DeleteDataFiles>
+			<Platform>-1</Platform>
+			<RunSTA>0</RunSTA>
+		</General>
+		<Security>
+			<Username/>
+			<Password/>
+			<SignPackage>False</SignPackage>
+			<Certificate/>
+			<CertificatePassword/>
+		</Security>
+		<Version>
+			<FileVersion/>
+			<ProductVersion/>
+			<ProductName/>
+			<Description/>
+			<Company/>
+			<Copyright/>
+			<InternalName/>
+			<OriginalFileName/>
+			<Comment/>
+		</Version>
+	</Packager>
+</Project>

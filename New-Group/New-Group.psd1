@@ -1,22 +1,22 @@
 ﻿##########################################################################
-# Created on:   01/02/2015 11:30 p.m.
+# Created on:   02/02/2015 01:11 a.m.
 # Created by:   crisrc012
 #-------------------------------------------------------------------------
 # Module Manifest
 #-------------------------------------------------------------------------
-# Module Name:  Install-Program
+# Module Name:  New-Group
 ##########################################################################
 
 @{
 
 # Script module or binary module file associated with this manifest
-ModuleToProcess = 'Install-Program.psm1'
+ModuleToProcess = 'New-Group.psm1'
 
 # Version number of this module.
 ModuleVersion = '1.6.2.0'
 
 # ID used to uniquely identify this module
-GUID = 'fc4102b8-6cc2-40cd-ac56-e1c2cd3e6d49'
+GUID = 'e55b82c9-392f-4e1b-91ec-f2ea4aeab29f'
 
 # Author of this module
 Author = 'crisrc012'
@@ -91,3 +91,10 @@ FileList = @()
 PrivateData = ''
 
 }
+
+
+
+
+
+
+

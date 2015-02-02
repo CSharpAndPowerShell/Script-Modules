@@ -1,22 +1,22 @@
 ﻿##########################################################################
-# Created on:   01/02/2015 11:30 p.m.
+# Created on:   02/02/2015 12:46 a.m.
 # Created by:   crisrc012
 #-------------------------------------------------------------------------
 # Module Manifest
 #-------------------------------------------------------------------------
-# Module Name:  Install-Program
+# Module Name:  Copy-ItemWithProgress
 ##########################################################################
 
 @{
 
 # Script module or binary module file associated with this manifest
-ModuleToProcess = 'Install-Program.psm1'
+ModuleToProcess = 'Copy-ItemWithProgress.psm1'
 
 # Version number of this module.
 ModuleVersion = '1.6.2.0'
 
 # ID used to uniquely identify this module
-GUID = 'fc4102b8-6cc2-40cd-ac56-e1c2cd3e6d49'
+GUID = '3d52787d-a69c-4ece-b581-7c3dfcd64507'
 
 # Author of this module
 Author = 'crisrc012'
@@ -91,3 +91,10 @@ FileList = @()
 PrivateData = ''
 
 }
+
+
+
+
+
+
+

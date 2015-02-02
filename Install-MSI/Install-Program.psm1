@@ -1,5 +1,5 @@
-﻿#requires -Version 2.0
-#requires -RunAsAdministrator
+﻿#requires -RunAsAdministrator
+#requires -Version 2.0
 Function Install-Program
 {
 	<#
@@ -14,7 +14,7 @@ Function Install-Program
 	Install-Program -Path C:\Ruta\Teamviewer.exe
  
     .NOTES
-    Escrito por Cristopher Robles - crisrc012
+    Escrito por Cristopher Robles
  
     .LINK
     https://github.com/PowerShellScripting
