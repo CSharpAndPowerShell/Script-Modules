@@ -1,7 +1,6 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
-Function Set-UAC
-{
+#requires -Version 4.0
+Function Set-UAC {
     <#
     .SYNOPSIS
     Modifica el control de cuentas de usuario.
@@ -21,34 +20,28 @@ Function Set-UAC
     #>
 
     [CmdletBinding()]
-    param
-    (
+    Param (
         [Parameter(Position=0,HelpMessage="Habilita UAC (Control de cuentas de usuario).")]
         [switch]$Enable=$false,
-
         [Parameter(Position=0,HelpMessage="Deshabilita UAC (Control de cuentas de usuario).")]
         [switch]$Disable=$false
     )
 	
-    if($Enable -and $Disable)
-    {
-        Write-Warning "No puede habilitar y deshabilitar esta función al mismo tiempo.`n"
+    If($Enable -and $Disable) {
+		[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
+		[void][System.Windows.Forms.MessageBox]::Show("No puede habilitar y deshabilitar esta función al mismo tiempo.","Error")
     }
-    else
-    {
-        Switch ($true)
-        {
-            $Disable
-            {
-                Set-ItemProperty -Path hklm:\software\Microsoft\Windows\CurrentVersion\Policies\System -Name EnableLUA -Value 0
-                Set-ItemProperty -Path hklm:\software\Microsoft\Windows\CurrentVersion\Policies\System -Name ConsentPromptBehaviorAdmin -Value 0
+    Else {
+        Switch($true) {
+            $Disable {
+				$Value = 0
             }
-            $Enable
-            {
-                Set-ItemProperty -Path hklm:\software\Microsoft\Windows\CurrentVersion\Policies\System -Name EnableLUA -Value 1
-				Set-ItemProperty -Path hklm:\software\Microsoft\Windows\CurrentVersion\Policies\System -Name ConsentPromptBehaviorAdmin -Value 1
+            $Enable {
+				$Value = 1
             }
         }
+		Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name EnableLUA -Value $Value
+		Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name ConsentPromptBehaviorAdmin -Value $Value
     }
 }
 

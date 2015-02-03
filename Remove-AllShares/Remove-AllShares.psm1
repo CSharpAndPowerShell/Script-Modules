@@ -1,7 +1,7 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
-Function Remove-AllShares
-{
+#requires -Modules Remove-Share
+#requires -Version 4.0
+Function Remove-AllShares {
     <#
     .SYNOPSIS
     Eliminar todos los recursos compartidos.
@@ -22,62 +22,50 @@ Function Remove-AllShares
     #>
     
     [CmdletBinding()]
-    Param
-	(		
+    Param (		
 		[Parameter(Position=0,HelpMessage="Se especifica para eliminar todos los recursos compartidos, incluyendo recursos administrativos de sistema.")]
 		[Switch]$NoSafe=$false,
-		
 		[Parameter(Position=0,HelpMessage="Se especifica para eliminar todos los recursos compartidos y los ocultos, no elimina recursos administrativos.")]
 		[Switch]$Hidden=$false
 	)
 	
-    Process
-    {
-		if($NoSafe -and $Hidden)
-		{
-			Write-Warning "No puede establecer varios modificadores al mismo tiempo.`nEste modulo no tiene poderes de super vaca."
+    Process {
+		If($NoSafe -and $Hidden) {
+			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
+			[void][System.Windows.Forms.MessageBox]::Show("No puede establecer varios modificadores simultaneamente.","Advertencia")
 		}
-		else
-		{
-			Try
-			{
+		Else {
+			Try {
+				[Byte]$i = 0
 				$Resources = (Get-WmiObject -Class WIN32_Share).Name #Obteniendo lista de recursos
-				Foreach ($Resource in $Resources)
-				{ #Se eliminan los recursos
-	                $i++ #Porcentaje de la barra de progreso
-					Switch($true)
-					{
-						$NoSafe
-						{
-	                        Write-Progress -Activity "Eliminando Recursos" -Status "$i %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete (($i / $Resources.Length) * 100 ) #Actualiza la barra de Progreso
+				Foreach ($Resource in $Resources) { #Se eliminan los recursos
+	                $i++
+					$Percent = (($i / $Resources.Length) * 100 ) #Porcentaje de la barra de progreso
+					Switch($true) {
+						$NoSafe	{
+	                        Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso
 							Remove-Share $Resource
 						}
-						$Hidden
-						{
-							if(($Resource -ne "ADMIN$") -and ($Resource -ne "IPC$") -and ($Resources.Length -gt 2) -and ($Resource -ne "NETLOGON") -and ($Resource -ne "SYSVOL"))
-							{
-	                            Write-Progress -Activity "Eliminando Recursos" -Status "$i %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete (($i / $Resources.Length) * 100 ) #Actualiza la barra de Progreso
+						$Hidden	{
+							If(($Resource -ne "ADMIN$") -and ($Resource -ne "IPC$") -and ($Resources.Length -gt 2) -and ($Resource -ne "NETLOGON") -and ($Resource -ne "SYSVOL")) {
+	                            Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso
 								Remove-Share $Resource
 							}
 						}
-						default
-						{
-							if((!($Resource.Contains("$"))) -and ($Resource -ne "NETLOGON") -and ($Resource -ne "SYSVOL"))
-							{
-	                            Write-Progress -Activity "Eliminando Recursos" -Status "$i %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete (($i / $Resources.Length) * 100 ) #Actualiza la barra de Progreso
+						Default {
+							If((!($Resource.Contains("$"))) -and ($Resource -ne "NETLOGON") -and ($Resource -ne "SYSVOL")) {
+	                            Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso
 								Remove-Share $Resource
 							}
 						}
 					}
 				}
 			}
-			Catch
-			{
+			Catch {
 				[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 				[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 			}
-			Finally
-			{
+			Finally {
 				Write-Progress -Activity "Eliminando Recursos" -Completed #Actualiza la barra de Progreso
 			}
 		}
@@ -85,6 +73,3 @@ Function Remove-AllShares
 }
 
 Export-ModuleMember Remove-AllShares
-
-
-

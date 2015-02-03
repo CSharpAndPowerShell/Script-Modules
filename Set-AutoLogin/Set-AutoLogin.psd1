@@ -1,19 +1,10 @@
-﻿##########################################################################
-# Created on:   02/02/2015 01:34 a.m.
-# Created by:   crisrc012
-#-------------------------------------------------------------------------
-# Module Manifest
-#-------------------------------------------------------------------------
-# Module Name:  Set-AutoLogin
-##########################################################################
-
-@{
+﻿@{
 
 # Script module or binary module file associated with this manifest
 ModuleToProcess = 'Set-AutoLogin.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0.0'
+ModuleVersion = '1.6.2.0'
 
 # ID used to uniquely identify this module
 GUID = '1c3c6239-5771-445b-a7a8-ec4ed6e0c4ca'
@@ -28,10 +19,10 @@ CompanyName = ''
 Copyright = '(c) 2015. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Module description'
+Description = 'Iniciar automáticamente la sesión de un usuario por tiempo indefinido.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '2.0'
+PowerShellVersion = '4.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''

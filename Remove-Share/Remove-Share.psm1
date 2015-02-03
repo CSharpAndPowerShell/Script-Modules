@@ -1,9 +1,7 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
-Function Remove-Share
-{
+#requires -Version 4.0
+Function Remove-Share {
     <#
- 
     .SYNOPSIS
     Eliminar recursos compartidos.
     
@@ -22,32 +20,25 @@ Function Remove-Share
     #>
     
     [CmdletBinding()]
-    Param
-	(
+    Param (
 		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre de recurso compartido a eliminar.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Sharename,
-		
 		[Parameter(Position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Ruta hacia el recurso compartido a eliminar.")]
 		[String]$Path
 	)
 	
-    Process
-    {
-		Try
-		{
-	        if ((Get-WmiObject -Class WIN32_Share).Name.Contains($Sharename)) #Verifica si el recurso está compatido.
-	        { #Se elimina el recurso compartido
+    Process {
+		Try {
+	        If ((Get-WmiObject -Class WIN32_Share).Name.Contains($Sharename)) { #Verifica si el recurso está compatido.
 	            $Share = (Get-WmiObject Win32_Share)[(Get-WmiObject Win32_Share).Name.IndexOf($Sharename)]
 	            $Share.Delete() | Out-Null
-	            if($Path.Length -ne 0)
-	            { #Se borra la carpeta compatida si se usa el parametro "Path"
+	            If($Path.Length -ne 0) { #Se borra la carpeta compatida si se usa el parametro "Path"
 	                Remove-Item $Path -Force -Recurse
 	            }
 	        }
 		}
-		Catch
-		{
+		Catch {
 			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 		}
@@ -55,6 +46,3 @@ Function Remove-Share
 }
 
 Export-ModuleMember Remove-Share
-
-
-

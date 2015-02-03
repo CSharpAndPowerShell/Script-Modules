@@ -1,16 +1,15 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
-Function Remove-AutoStart
-{
+#requires -Version 4.0
+Function Remove-AutoStart {
     <#
     .SYNOPSIS
-    Registar un programa para que arranque automaticamente en el siguiente inicio de sesión de cualquier usuario por siempre, hasta que se elimine; usar "Remove-AutoStartAllways".
+    Registar un programa para que arranque automaticamente en el siguiente inicio de sesión de cualquier usuario por siempre, hasta que se elimine; usar "Remove-AutoStart".
     
     .DESCRIPTION
     Esta función necesita el parámetro "Name".
  
     .EXAMPLE
-    Remove-AutoStart -Name "ATP"
+    Remove-AutoStart -Name "Script"
  
     .NOTES
     Escrito por Cristopher Robles
@@ -20,31 +19,25 @@ Function Remove-AutoStart
     #>
 
     [CmdletBinding()]
-    Param
-    (
+    Param (
 		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre de la entrada que identifica el AutoStart.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name
     )
 	
-    Process
-    {
-		Try
-		{
+    Process {
+		Try {
 			$Key = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\"
 			$Test = Get-ItemProperty $Key $Name -ErrorAction SilentlyContinue
-			if($Test -ne $null)
-			{
+			If($Test -ne $null) {
 				Remove-ItemProperty $Key -Name "$Name" -Force
 			}
-			else
-			{
+			Else {
 				[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 				[void][System.Windows.Forms.MessageBox]::Show("La entrada no existe","Advertencia")
 			}
 		}
-		Catch
-		{
+		Catch {
 			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 		}
@@ -52,6 +45,3 @@ Function Remove-AutoStart
 }
 
 Export-ModuleMember Remove-AutoStart
-
-
-

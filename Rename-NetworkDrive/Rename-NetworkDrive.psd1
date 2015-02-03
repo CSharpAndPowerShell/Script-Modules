@@ -1,13 +1,4 @@
-﻿##########################################################################
-# Created on:   02/02/2015 01:56 a.m.
-# Created by:   crisrc012
-#-------------------------------------------------------------------------
-# Module Manifest
-#-------------------------------------------------------------------------
-# Module Name:  Rename-NetworkDrive
-##########################################################################
-
-@{
+﻿@{
 
 # Script module or binary module file associated with this manifest
 ModuleToProcess = 'Rename-NetworkDrive.psm1'
