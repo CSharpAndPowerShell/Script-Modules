@@ -1,9 +1,7 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
-Function Add-SharePermission
-{
+#requires -Version 4.0
+Function Add-SharePermission {
     <#
- 
     .SYNOPSIS
     Agrega permisos a recursos compartidos, en equipos y servidores.
     
@@ -25,8 +23,7 @@ Function Add-SharePermission
     #>
 
     [CmdletBinding()]
-    param
-    (
+    param (
         [Parameter(Mandatory=$true,ValueFromPipeline=$true,Position=0,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del recurso compartido existente.")]
         [string]$Sharename,
 
@@ -38,47 +35,45 @@ Function Add-SharePermission
         [string]$Access = "Read"
     )
 	
-    Process
-    {
-        if ((Get-WmiObject -Class "Win32_Share").Name.Contains($Sharename))
-        {
-			try
-			{
-	            Switch ($Access) 
-	            {
-	                'Read' { $AccessMask = 1179817 }
-	                'Change' { $AccessMask = 1245631 }
-	                'FullControl' { $AccessMask = 2032127 }
-	            }
-	            $tclass = [wmiclass]"\\$env:COMPUTERNAME\root\cimv2:Win32_Trustee"
-	            $trustee = $tclass.CreateInstance()
-	            $trustee.Domain = $env:USERDOMAIN
-	            $trustee.Name = $User
-	            $aclass = [wmiclass]"\\$env:COMPUTERNAME\root\cimv2:Win32_ACE"
-	            $ace = $aclass.CreateInstance()
-	            $ace.AccessMask = $accessmask
-	            $ace.AceFlags = 0
-	            $ace.AceType = 0
-	            $ace.Trustee = $trustee
-	            $shss = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$sharename'" -ComputerName $env:COMPUTERNAME
-	            $sd = Invoke-WmiMethod -InputObject $shss -Name GetSecurityDescriptor |
-	            select -ExpandProperty Descriptor
-	            $sclass = [wmiclass]"\\$env:COMPUTERNAME\root\cimv2:Win32_SecurityDescriptor"
-	            $newsd = $sclass.CreateInstance()
-	            $newsd.ControlFlags = $sd.ControlFlags
-	            foreach ($oace in $sd.DACL) { $newsd.DACL += $oace }
-	            $newsd.DACL += $ace
-	            $share = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$ShareName'"
-	            $share.SetSecurityDescriptor($newsd) | Out-Null
+    Process {
+        if ((Get-WmiObject -Class "Win32_Share").Name.Contains($Sharename)) {
+			try {
+	            $Tclass = [WMIClass]"\\$env:COMPUTERNAME\root\cimv2:Win32_Trustee"
+	            $Trustee = $TClass.CreateInstance()
+	            $Trustee.Domain = $ENV:USERDOMAIN
+	            $Trustee.Name = $User
+	            $aclass = [WMIClass]"\\$ENV:COMPUTERNAME\root\cimv2:Win32_ACE"
+	            $ACE = $AClass.CreateInstance()
+				Switch ($Access) {
+	                'Read' {
+						$ACE.AccessMask = 1179817
+					}
+	                'Change' {
+						$ACE.AccessMask = 1245631
+					}
+	                'FullControl' {
+						$ACE.AccessMask = 2032127
+					}
+				}
+	            $ACE.AceFlags = 0
+	            $ACE.AceType = 0
+	            $ACE.Trustee = $Trustee
+	            $LSSS = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$sharename'" -ComputerName $env:COMPUTERNAME
+	            $SD = Invoke-WmiMethod -InputObject $LSSS -Name GetSecurityDescriptor | Select -ExpandProperty Descriptor
+	            $SClass = [WMIClass]"\\$ENV:COMPUTERNAME\root\cimv2:Win32_SecurityDescriptor"
+	            $NewSD = $SClass.CreateInstance()
+	            $NewSD.ControlFlags = $SD.ControlFlags
+	            foreach ($ACE0 in $SD.DACL) { $NewSD.DACL += $ACE0 }
+	            $NewSD.DACL += $ACE
+	            $Share = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$ShareName'"
+	            $Share.SetSecurityDescriptor($NewSD) | Out-Null
 			}
-			Catch
-			{
+			Catch {
 				[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 				[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 			}
         }
-        else
-        {
+        else {
 			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 			[void][System.Windows.Forms.MessageBox]::Show("No existe el recurso compartido '$ShareName'!`nImposible asignar permisos.","Advertencia")
         }

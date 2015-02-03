@@ -31,7 +31,7 @@ Copyright = '(c) 2015. All rights reserved.'
 Description = 'Module description'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '2.0'
+PowerShellVersion = '4.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''

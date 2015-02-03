@@ -1,9 +1,7 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
-Function Add-ToGroup
-{
+#requires -Version 4.0
+Function Add-ToGroup {
     <#
- 
     .SYNOPSIS
     Agrega usuarios o grupos a grupos locales.
     
@@ -21,8 +19,7 @@ Function Add-ToGroup
     #>
     
     [CmdletBinding()]
-    Param
-	(
+    Param (
 		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del usuario o grupo a añadir.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name,
@@ -31,18 +28,14 @@ Function Add-ToGroup
 		[String]$Group
 	)
 	
-    Process
-    {
+    Process {
         $LocalGroups = net localgroup $Group
-        if(!($LocalGroups.Contains("$Name")))
-        {
-			try
-			{
+        If(!($LocalGroups.Contains("$Name"))) {
+			Try {
 	            $ToGroup = [ADSI]"WinNT://$ENV:Computername/$Group,group"
 	            $ToGroup.Add("WinNT://$Name")
 			}
-			catch
-			{
+			Catch {
 				[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 				[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 			}
@@ -51,6 +44,3 @@ Function Add-ToGroup
 }
 
 Export-ModuleMember Add-ToGroup
-
-
-

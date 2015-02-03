@@ -1,6 +1,5 @@
-﻿#requires -Version 2.0
-Function Rename-Drive
-{
+﻿#requires -Version 4.0
+Function Rename-Drive {
     <#
     .SYNOPSIS
     Renombra unidades de disco local.
@@ -19,8 +18,7 @@ Function Rename-Drive
     #>
 
     [CmdletBinding()]
-    Param
-    (
+    Param (
 		[Parameter(Position=0,Mandatory=$True,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Letra de la unidad a renombrar.")]
 		[ValidateNotNullOrEmpty()]
 		[Char]$Letter,
@@ -30,17 +28,14 @@ Function Rename-Drive
 		[String]$Name
     )
 
-    Process
-    {
-		Try
-		{
+    Process {
+		Try {
 	        $DriveLetter = "DriveLetter = '" + $Letter + ":'"
 	        $Drive = Get-WmiObject -Class win32_volume -Filter $DriveLetter
 	        $Drive.Label = $Name
 	        $Drive.put() | Out-Null
 		}
-		Catch
-		{
+		Catch {
 			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 		}
@@ -48,6 +43,3 @@ Function Rename-Drive
 }
 
 Export-ModuleMember Rename-Drive
-
-
-

@@ -1,6 +1,5 @@
-﻿#requires -Version 2.0
-Function Rename-NetworkDrive
-{
+﻿#requires -Version 4.0
+Function Rename-NetworkDrive {
     <#
     .SYNOPSIS
     Renombra unidades de red.
@@ -19,8 +18,7 @@ Function Rename-NetworkDrive
     #>
 
     [CmdletBinding()]
-    Param
-    (
+    Param (
 		[Parameter(Position=0,Mandatory=$True,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Letra de la unidad de red a renombrar.")]
 		[ValidateNotNullOrEmpty()]
 		[Char]$Letter,
@@ -31,14 +29,12 @@ Function Rename-NetworkDrive
     )
 
     Process {
-		Try
-		{
+		Try {
 	        $Drive = $Letter + ":"
 	        $NetDrive = New-Object -ComObject Shell.Application
 	        $NetDrive.NameSpace($Drive).Self.Name = $Name
 		}
-		Catch
-		{
+		Catch {
 			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 		}
@@ -46,6 +42,3 @@ Function Rename-NetworkDrive
 }
 
 Export-ModuleMember Rename-NetworkDrive
-
-
-
