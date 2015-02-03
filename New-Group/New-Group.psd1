@@ -1,13 +1,4 @@
-﻿##########################################################################
-# Created on:   02/02/2015 01:11 a.m.
-# Created by:   crisrc012
-#-------------------------------------------------------------------------
-# Module Manifest
-#-------------------------------------------------------------------------
-# Module Name:  New-Group
-##########################################################################
-
-@{
+﻿@{
 
 # Script module or binary module file associated with this manifest
 ModuleToProcess = 'New-Group.psm1'
@@ -28,10 +19,10 @@ CompanyName = ''
 Copyright = '(c) 2015. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Module description'
+Description = 'Crear grupos de usuario locales.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '2.0'
+PowerShellVersion = '4.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''
@@ -91,10 +82,3 @@ FileList = @()
 PrivateData = ''
 
 }
-
-
-
-
-
-
-

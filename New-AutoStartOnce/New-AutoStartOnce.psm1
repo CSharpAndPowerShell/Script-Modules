@@ -1,7 +1,6 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
-Function New-AutoStartOnce
-{
+#requires -Version 4.0
+Function New-AutoStartOnce {
     <#
     .SYNOPSIS
     Registar un programa para que arranque automaticamente en el siguiente inicio de sesión de cualquier usuario una única vez.
@@ -20,22 +19,16 @@ Function New-AutoStartOnce
     #>
 
     [CmdletBinding()]
-    Param
-    (
+    Param (
 		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Ruta al archivo a ejecutar en el siguiente reinicio.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Value
     )
 	
-    Process
-    {
+    Process {
         $Name = $Value.Split("\")[-1]
         Set-ItemProperty -Path hklm:\software\Microsoft\Windows\CurrentVersion\RunOnce -Name $Name -Value $Value -Force | Out-Null
     }
 }
 
-
 Export-ModuleMember New-AutoStartOnce
-
-
-

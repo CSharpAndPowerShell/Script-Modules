@@ -1,19 +1,10 @@
-﻿##########################################################################
-# Created on:   02/02/2015 01:05 a.m.
-# Created by:   crisrc012
-#-------------------------------------------------------------------------
-# Module Manifest
-#-------------------------------------------------------------------------
-# Module Name:  New-AutoStartOnce
-##########################################################################
-
-@{
+﻿@{
 
 # Script module or binary module file associated with this manifest
 ModuleToProcess = 'New-AutoStartOnce.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0.0'
+ModuleVersion = '1.6.2.0'
 
 # ID used to uniquely identify this module
 GUID = '66877230-257f-446f-97dd-011b63879ad2'
@@ -28,10 +19,10 @@ CompanyName = ''
 Copyright = '(c) 2015. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Module description'
+Description = 'Registar un programa para que arranque automaticamente en el siguiente inicio de sesión de cualquier usuario una única vez.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '2.0'
+PowerShellVersion = '4.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''

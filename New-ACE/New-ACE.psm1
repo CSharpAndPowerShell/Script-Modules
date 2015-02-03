@@ -1,7 +1,6 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
-Function New-ACE
-{
+#requires -Version 4.0
+Function New-ACE {
     <#
     .SYNOPSIS
     Asigna permisos NTFS a carpetas y archivos.
@@ -20,27 +19,21 @@ Function New-ACE
     #>
 
     [CmdletBinding()]
-    param
-    (
+    Param (
         [Parameter(Mandatory=$true,ValueFromPipeline=$true,Position=0,ValueFromPipelineByPropertyName=$true,HelpMessage="Ruta del archivo o carpeta a cambiar permisos.")]
         [string]$Path,
-
         [Parameter(Mandatory=$true,ValueFromPipeline=$true,Position=1,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del usuario o grupo al que se le modificará el acceso.")]
         [string]$User,
-
         [Parameter(ValueFromPipeline=$true,Position=2,ValueFromPipelineByPropertyName=$true,HelpMessage="Nivel de acceso que se le otorgará al usuario o grupo.")]
         [ValidateSet("ListDirectory","ReadData","WriteData","CreateFiles","CreateDirectories","AppendData","ReadExtendedAttributes","WriteExtendedAttributes","Traverse","ExecuteFile","DeleteSubdirectoriesAndFiles","ReadAttributes","WriteAttributes","Write","Delete","ReadPermissions","Read","ReadAndExecute","Modify","ChangePermissions","TakeOwnership","Synchronize","FullControl")]
         [string]$Right = "Read",
-
         [Parameter(ValueFromPipeline=$true,Position=3,ValueFromPipelineByPropertyName=$true,HelpMessage="Tipo de ACL que se le otorgará al usuario o grupo.")]
         [ValidateSet("Allow", "Deny")]
         [string]$ACL = "Allow"
     )
 	
-	Try
-	{
-	    if (!(Test-Path $Path))
-	    {
+	Try	{
+	    If (!(Test-Path $Path)) {
 	        mkdir $Path -Force | Out-Null
 	    }
 	    $Rights = [System.Security.AccessControl.FileSystemRights]$Right
@@ -54,14 +47,10 @@ Function New-ACE
 		$SetAcl.AddAccessRule($Args)
 		Set-Acl $Path $SetAcl | Out-Null
 	}
-	Catch
-	{
+	Catch {
 		[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 		[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 	}
 }
 
 Export-ModuleMember New-ACE
-
-
-

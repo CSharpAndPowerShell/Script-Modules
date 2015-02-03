@@ -1,7 +1,6 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
-Function New-Group
-{
+#requires -Version 4.0
+Function New-Group {
     <#
     .SYNOPSIS
     Crear grupos de usuario locales.
@@ -21,37 +20,28 @@ Function New-Group
     #>
     
     [CmdletBinding()]
-    Param
-	(
+    Param (
 		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del nuevo grupo.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name,
-		
 		[Parameter(Position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Descripción del contenido o función del grupo.")]
 		[String]$Description
 	)
 	
-    Process
-    {
+    Process {
         $LocalGroups = (Get-WmiObject -Class Win32_Group).Name
-	    #Comprueba si el grupo local existe, si no existe se crea
-        if (($Name -ne "Administradores") -and ($Name -ne "Usuarios"))
-        {
-	        if (!($LocalGroups.Contains("$Name")))
-	        {
-				Try
-				{
+        If (($Name -ne "Administradores") -and ($Name -ne "Usuarios")) { #Comprueba si el grupo local existe, si no existe se crea
+	        If (!($LocalGroups.Contains("$Name"))) {
+				Try {
 	                $Computer = [ADSI]"WinNT://$ENV:Computername"
 	                $Group = $Computer.Create("Group",$Name)
 	                $Group.SetInfo()
-	                if ($Description.Length -ne 0)
-	                {
-	                    $Group.description = $Description
+	                If ($Description.Length -ne 0) {
+	                    $Group.Description = $Description
 	                    $Group.SetInfo()
 	                }
 				}
-				Catch
-				{
+				Catch {
 					[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 					[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 				}
@@ -61,6 +51,3 @@ Function New-Group
 }
 
 Export-ModuleMember New-Group
-
-
-

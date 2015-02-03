@@ -1,5 +1,5 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 2.0
+#requires -Version 4.0
 Function Install-Program
 {
 	<#
@@ -28,21 +28,16 @@ Function Install-Program
 		[string]$Path
 	)
 	
-    Process
-    {
-		try
-		{
-			if ($Path.EndsWith(".msi"))
-			{
-				Start-Process "$Path" /qr -Wait
+    Process {
+		Try {
+			If ($Path.EndsWith(".msi")) {
+				Start-Process "$Path" /qb -Wait
 			}
-			elseif ($Path.EndsWith(".exe"))
-			{
+			ElseIf ($Path.EndsWith(".exe")) {
 				Start-Process "$Path" /Silent -Wait
 			}
 		}
-		Catch
-		{
+		Catch {
 			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 		}

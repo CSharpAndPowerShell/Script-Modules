@@ -1,13 +1,4 @@
-﻿##########################################################################
-# Created on:   02/02/2015 12:28 a.m.
-# Created by:   crisrc012
-#-------------------------------------------------------------------------
-# Module Manifest
-#-------------------------------------------------------------------------
-# Module Name:  Add-SharePermission
-##########################################################################
-
-@{
+﻿@{
 
 # Script module or binary module file associated with this manifest
 ModuleToProcess = 'Add-SharePermission.psm1'

@@ -1,6 +1,5 @@
-﻿#requires -Version 2.0
-Function New-NumberList
-{
+﻿#requires -Version 4.0
+Function New-NumberList {
     <#
     .SYNOPSIS
     Crea una lista de numeros.
@@ -12,12 +11,10 @@ Function New-NumberList
     $Nl = New-NumberList 1 6
     $Us = New-NumberList 1 30
     $NM = "11"
-    For($j = 1; $j -lt $Us.Length; $j++)
-    {
-        For($i = 1; $i -lt $Nl.Length; $i++)
-        {
-            $Concatenar = "M" + $NM + "-" + $Nl[$i] + $Us[$j]
-            Write-Host $Concatenar
+    For($j = 1; $j -lt $Us.Length; $j++) {
+        For($i = 1; $i -lt $Nl.Length; $i++) {
+            $C = "M" + $NM + "-" + $Nl[$i] + $Us[$j]
+            Write-Host $C
         }
     }
  
@@ -29,40 +26,30 @@ Function New-NumberList
     #>
 
     [CmdletBinding()]
-	Param
-	(
+	Param (
 		[parameter(mandatory=$true,position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Inicio del contador.")]
 		[ValidateNotNullorEmpty()]
 		[int]$Start,
-
         [parameter(mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Fin del contador.")]
 		[ValidateNotNullorEmpty()]
 		[int]$End
 	)
     
-    Process
-    {
+    Process {
         [String[]]$Contar
-        For ($i = $Start; $i -le $End; $i++)
-        {
-            if ($i -le 9)
-            {
+        For ($i = $Start; $i -le $End; $i++) {
+            If ($i -le 9) {
                 $tmp = '0' + $i
             }
-            else
-            {
+            Else {
                 $tmp = $i + ""
             }
             $Count += @($tmp)
         }
     }
-    End
-    {
+    End {
         Return $Count
     }
 }
 
 Export-ModuleMember New-NumberList
-
-
-

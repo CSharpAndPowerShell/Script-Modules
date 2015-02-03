@@ -1,13 +1,4 @@
-﻿##########################################################################
-# Created on:   02/02/2015 12:46 a.m.
-# Created by:   crisrc012
-#-------------------------------------------------------------------------
-# Module Manifest
-#-------------------------------------------------------------------------
-# Module Name:  Copy-ItemWithProgress
-##########################################################################
-
-@{
+﻿@{
 
 # Script module or binary module file associated with this manifest
 ModuleToProcess = 'Copy-ItemWithProgress.psm1'
