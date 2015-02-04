@@ -36,11 +36,11 @@ Function Remove-AllShares {
 		}
 		Else {
 			Try {
-				[Byte]$i = 0
+				[int]$i = 0
 				$Resources = (Get-WmiObject -Class WIN32_Share).Name #Obteniendo lista de recursos
 				Foreach ($Resource in $Resources) { #Se eliminan los recursos
 	                $i++
-					$Percent = (($i / $Resources.Length) * 100 ) #Porcentaje de la barra de progreso
+					[int]$Percent = (($i / $Resources.Length) * 100 ) #Porcentaje de la barra de progreso
 					Switch($true) {
 						$NoSafe	{
 	                        Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso

@@ -29,7 +29,7 @@ Function Copy-ItemWithProgress {
 	
     Process {
 	    $Files = Get-ChildItem $Path -Recurse
-		[Byte]$i = 0
+		[int]$i = 0
 	    Foreach ($File in $Files) {
             $i++
 		    If ($File.PSIsContainer -and $Files.mode.Contains("a")) {
@@ -46,7 +46,7 @@ Function Copy-ItemWithProgress {
 				[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 				[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
 			}
-			[Byte]$Percent = (($i / $Files.Length) * 100)
+			[int]$Percent = (($i / $Files.Length) * 100)
             Write-Progress -Activity "Copiando" -Status "$Percent %  Completado" -CurrentOperation "Copiando '$File' a '$Dest'" -PercentComplete $Percent
 	    }
         Write-Progress -Activity "Copiando" -Completed
