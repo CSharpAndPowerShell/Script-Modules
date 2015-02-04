@@ -1,5 +1,5 @@
 ﻿#requires -RunAsAdministrator
-#requires -Modules New-Group, Add-ToGroup
+#requires -Modules New-Group, Add-ToGroup, New-MsgBox
 #requires -Version 4.0
 Function New-User {
     <#
@@ -81,16 +81,13 @@ Function New-User {
 			        Add-ToGroup -Name $Name -Group $Group
 		        }
 	        }
-	        Else { #Si el usuario ya existe
-		        If ($Group.Length -ne 0) { #Se agrega el usuario al grupo local
-                    New-Group -Name $Group
-				    Add-ToGroup -Name $Name -Group $Group
-                }
-		    }
-		}
+	        ElseIf ($Group.Length -ne 0) { #Si el usuario ya existe, Se agrega el usuario al grupo local
+                New-Group -Name $Group
+			    Add-ToGroup -Name $Name -Group $Group
+            }
+	    }
 		Catch {
-			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
+			New-MsgBox -Message "$_" -Title "Error" | Out-Null
 		}
     }
 }

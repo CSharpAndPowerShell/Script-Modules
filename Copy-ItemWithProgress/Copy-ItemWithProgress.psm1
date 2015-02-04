@@ -1,4 +1,5 @@
 ﻿#requires -Version 4.0
+#requires -Modules New-MsgBox
 Function Copy-ItemWithProgress {
 	<#
     .SYNOPSIS
@@ -29,7 +30,7 @@ Function Copy-ItemWithProgress {
 	
     Process {
 	    $Files = Get-ChildItem $Path -Recurse
-		[int]$i = 0
+		[Int]$i = 0
 	    Foreach ($File in $Files) {
             $i++
 		    If ($File.PSIsContainer -and $Files.mode.Contains("a")) {
@@ -43,10 +44,9 @@ Function Copy-ItemWithProgress {
 	        	Copy-Item -Path ($File.PSPath.Substring(38)) -Destination "$Dest" -Force
 			}
 			Catch {
-				[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-				[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
+				New-MsgBox -Message "$_" -Title "Error" | Out-Null
 			}
-			[int]$Percent = (($i / $Files.Length) * 100)
+			[Int]$Percent = (($i / $Files.Length) * 100)
             Write-Progress -Activity "Copiando" -Status "$Percent %  Completado" -CurrentOperation "Copiando '$File' a '$Dest'" -PercentComplete $Percent
 	    }
         Write-Progress -Activity "Copiando" -Completed

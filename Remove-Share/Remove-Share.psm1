@@ -1,5 +1,6 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
+#requires -Modules New-MsgBox
 Function Remove-Share {
     <#
     .SYNOPSIS
@@ -39,8 +40,7 @@ Function Remove-Share {
 	        }
 		}
 		Catch {
-			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
+			New-MsgBox -Message "$_" -Title "Error" | Out-Null
 		}
     }
 }

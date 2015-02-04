@@ -1,5 +1,6 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
+#requires -Modules New-MsgBox
 Function Remove-AutoStart {
     <#
     .SYNOPSIS
@@ -33,13 +34,11 @@ Function Remove-AutoStart {
 				Remove-ItemProperty $Key -Name "$Name" -Force
 			}
 			Else {
-				[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-				[void][System.Windows.Forms.MessageBox]::Show("La entrada no existe","Advertencia")
+				New-MsgBox -Message "La entrada no existe" -Title "Advertencia"
 			}
 		}
 		Catch {
-			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
+			New-MsgBox -Message "$_" -Title "Error"
 		}
     }
 }

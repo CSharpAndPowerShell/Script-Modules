@@ -1,5 +1,5 @@
 ﻿#requires -RunAsAdministrator
-#requires -Modules New-ACE, Add-SharePermissions
+#requires -Modules New-ACE, Add-SharePermissions, New-MsgBox
 #requires -Version 4.0
 Function New-Share {
     <#
@@ -75,8 +75,7 @@ Function New-Share {
 	        Add-SharePermission -Sharename $Sharename -User $User -Access $Access
 		}
 		Catch {
-			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
+			New-MsgBox -Message "$_" -Title "Error" | Out-Null
 		}
     }
 }

@@ -1,5 +1,6 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
+#requires -Modules New-MsgBox
 Function Add-SharePermission {
     <#
     .SYNOPSIS
@@ -23,21 +24,19 @@ Function Add-SharePermission {
     #>
 
     [CmdletBinding()]
-    param (
+    Param (
         [Parameter(Mandatory=$true,ValueFromPipeline=$true,Position=0,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del recurso compartido existente.")]
-        [string]$Sharename,
-
+        [String]$Sharename,
         [Parameter(Mandatory=$true,ValueFromPipeline=$true,Position=1,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del usuario o grupo al que le será compatido el recurso.")]
-        [string]$User,
-
+        [String]$User,
         [Parameter(ValueFromPipeline=$true,Position=2,ValueFromPipelineByPropertyName=$true,HelpMessage="Nivel de acceso que se le otorgará al usuario o grupo.")]
         [ValidateSet("Read", "Change", "FullControl")]
-        [string]$Access = "Read"
+        [String]$Access = "Read"
     )
 	
     Process {
-        if ((Get-WmiObject -Class "Win32_Share").Name.Contains($Sharename)) {
-			try {
+        If ((Get-WmiObject -Class "Win32_Share").Name.Contains($Sharename)) {
+			Try {
 	            $Tclass = [WMIClass]"\\$env:COMPUTERNAME\root\cimv2:Win32_Trustee"
 	            $Trustee = $TClass.CreateInstance()
 	            $Trustee.Domain = $ENV:USERDOMAIN
@@ -63,19 +62,19 @@ Function Add-SharePermission {
 	            $SClass = [WMIClass]"\\$ENV:COMPUTERNAME\root\cimv2:Win32_SecurityDescriptor"
 	            $NewSD = $SClass.CreateInstance()
 	            $NewSD.ControlFlags = $SD.ControlFlags
-	            foreach ($ACE0 in $SD.DACL) { $NewSD.DACL += $ACE0 }
+	            ForEach ($ACE0 in $SD.DACL) {
+					$NewSD.DACL += $ACE0
+				}
 	            $NewSD.DACL += $ACE
 	            $Share = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$ShareName'"
 	            $Share.SetSecurityDescriptor($NewSD) | Out-Null
 			}
 			Catch {
-				[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-				[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
+				New-MsgBox -Message "$_" -Title "Error" | Out-Null
 			}
         }
-        else {
-			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-			[void][System.Windows.Forms.MessageBox]::Show("No existe el recurso compartido '$ShareName'!`nImposible asignar permisos.","Advertencia")
+        Else {
+			New-MsgBox -Message "No existe el recurso compartido '$ShareName'!`nImposible asignar permisos." -Title "Advertencia" | Out-Null
         }
     }
 }

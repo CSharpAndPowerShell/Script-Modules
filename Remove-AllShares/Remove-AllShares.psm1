@@ -1,5 +1,5 @@
 ﻿#requires -RunAsAdministrator
-#requires -Modules Remove-Share
+#requires -Modules Remove-Share, New-MsgBox
 #requires -Version 4.0
 Function Remove-AllShares {
     <#
@@ -31,16 +31,15 @@ Function Remove-AllShares {
 	
     Process {
 		If($NoSafe -and $Hidden) {
-			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-			[void][System.Windows.Forms.MessageBox]::Show("No puede establecer varios modificadores simultaneamente.","Advertencia")
+			New-MsgBox -Message "No puede establecer varios modificadores simultaneamente." -Title "Advertencia" | Out-Null
 		}
 		Else {
 			Try {
-				[int]$i = 0
+				[Int]$i = 0
 				$Resources = (Get-WmiObject -Class WIN32_Share).Name #Obteniendo lista de recursos
 				Foreach ($Resource in $Resources) { #Se eliminan los recursos
 	                $i++
-					[int]$Percent = (($i / $Resources.Length) * 100 ) #Porcentaje de la barra de progreso
+					[Int]$Percent = (($i / $Resources.Length) * 100 ) #Porcentaje de la barra de progreso
 					Switch($true) {
 						$NoSafe	{
 	                        Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso
@@ -62,8 +61,7 @@ Function Remove-AllShares {
 				}
 			}
 			Catch {
-				[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-				[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
+				New-MsgBox -Message "$_" -Title "Error" | Out-Null
 			}
 			Finally {
 				Write-Progress -Activity "Eliminando Recursos" -Completed #Actualiza la barra de Progreso

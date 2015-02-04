@@ -1,7 +1,7 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
-Function Install-Program
-{
+#requires -Modules New-MsgBox
+Function Install-Program {
 	<#
     .SYNOPSIS
     Instalar programas.
@@ -21,8 +21,7 @@ Function Install-Program
     #>
 	
     [CmdletBinding()]
-	Param
-	(
+	Param (
 		[parameter(mandatory=$true,position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Ruta del instalador con extensión .msi.")]
 		[ValidateNotNullorEmpty()]
 		[string]$Path
@@ -38,8 +37,7 @@ Function Install-Program
 			}
 		}
 		Catch {
-			[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-			[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
+			New-MsgBox -Message "$_" -Title "Error" | Out-Null
 		}
     }
 }

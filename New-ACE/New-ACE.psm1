@@ -1,5 +1,6 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
+#requires -Modules New-MsgBox
 Function New-ACE {
     <#
     .SYNOPSIS
@@ -48,8 +49,7 @@ Function New-ACE {
 		Set-Acl $Path $SetAcl | Out-Null
 	}
 	Catch {
-		[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-		[void][System.Windows.Forms.MessageBox]::Show("$_","Error")
+		New-MsgBox -Message "$_" -Title "Error" | Out-Null
 	}
 }
 
