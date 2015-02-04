@@ -1,0 +1,42 @@
+﻿<Project>
+	<Version>1.0</Version>
+	<FileID>37457720-9d87-4e0a-9eba-e4c77f56d1f7</FileID>
+	<ProjectType>1</ProjectType>
+	<Files>
+		<File ReferenceName="" Build="0">New-MsgBox.psd1</File>
+		<File ReferenceName="" Build="0">New-MsgBox.psm1</File>
+	</Files>
+	<OpenFiles>
+		<File>New-MsgBox.psd1</File>
+		<File>New-MsgBox.psm1</File>
+	</OpenFiles>
+	<Packager>
+		<General>
+			<PackageName/>
+			<PackageIcon/>
+			<ManifestCreation>1</ManifestCreation>
+			<CustomManifest/>
+			<DeleteDataFiles>0</DeleteDataFiles>
+			<Platform>-1</Platform>
+			<RunSTA>0</RunSTA>
+		</General>
+		<Security>
+			<Username/>
+			<Password/>
+			<SignPackage>False</SignPackage>
+			<Certificate/>
+			<CertificatePassword/>
+		</Security>
+		<Version>
+			<FileVersion/>
+			<ProductVersion/>
+			<ProductName/>
+			<Description/>
+			<Company/>
+			<Copyright/>
+			<InternalName/>
+			<OriginalFileName/>
+			<Comment/>
+		</Version>
+	</Packager>
+</Project>
