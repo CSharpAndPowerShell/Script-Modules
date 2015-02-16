@@ -4,7 +4,7 @@
 ModuleToProcess = 'New-NetworkDrive.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.6.2.0'
+ModuleVersion = '1.6.2.1'
 
 # ID used to uniquely identify this module
 GUID = '7b8339e8-d4fa-457e-a683-f27f22f1eb85'

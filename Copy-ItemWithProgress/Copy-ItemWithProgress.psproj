@@ -1,0 +1,11 @@
+﻿<Project>
+  <Version>1</Version>
+  <FileID>3d52787d-a69c-4ece-b581-7c3dfcd64507</FileID>
+  <ProjectType>1</ProjectType>
+  <Files>
+    <File ReferenceName="" Build="2">Copy-ItemWithProgress.psd1</File>
+    <File ReferenceName="" Build="0">Copy-ItemWithProgress.psm1</File>
+  </Files>
+  <StartupScript>
+  </StartupScript>
+</Project>

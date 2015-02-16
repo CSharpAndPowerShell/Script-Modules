@@ -1,7 +1,8 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
 #requires -Modules New-MsgBox
-Function Add-ToGroup {
+Function Add-ToGroup
+{
     <#
     .SYNOPSIS
     Agrega usuarios o grupos a grupos locales.
@@ -18,29 +19,34 @@ Function Add-ToGroup {
     .LINK
     https://github.com/PowerShellScripting
     #>
-    
-    [CmdletBinding()]
-    Param (
-		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del usuario o grupo a añadir.")]
+	
+	[CmdletBinding()]
+	Param (
+		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del usuario o grupo a añadir.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name,
 		
-		[Parameter(Mandatory=$True,Position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Grupo al que pertenecerá el usuario o grupo.")]
+		[Parameter(Mandatory = $True, Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Grupo al que pertenecerá el usuario o grupo.")]
 		[String]$Group
 	)
 	
-    Process {
-        $LocalGroups = net localgroup $Group
-        If(!($LocalGroups.Contains("$Name"))) {
-			Try {
-	            $ToGroup = [ADSI]"WinNT://$ENV:Computername/$Group,group"
-	            $ToGroup.Add("WinNT://$Name")
+	Process
+	{
+		New-Group -Name $Name -Description "Este grupo ha sido creado de manera implicita por 'Add-ToGroup'."
+		$LocalGroups = net localgroup $Group
+		If (!($LocalGroups.Contains("$Name")))
+		{
+			Try
+			{
+				$ToGroup = [ADSI]"WinNT://$ENV:Computername/$Group,group"
+				$ToGroup.Add("WinNT://$Name")
 			}
-			Catch {
+			Catch
+			{
 				New-MsgBox -Message "$_" -Title "Error" | Out-Null
 			}
-        }
-    }
+		}
+	}
 }
 
 Export-ModuleMember Add-ToGroup
