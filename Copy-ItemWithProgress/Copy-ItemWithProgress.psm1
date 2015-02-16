@@ -1,6 +1,7 @@
 ﻿#requires -Version 4.0
 #requires -Modules New-MsgBox
-Function Copy-ItemWithProgress {
+Function Copy-ItemWithProgress
+{
 	<#
     .SYNOPSIS
     Copia archivos y muestra una barra de progreso.
@@ -19,38 +20,41 @@ Function Copy-ItemWithProgress {
     #>
 	
 	Param (
-	    [Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del usuario o grupo a añadir.")]
-	    [ValidateNotNullOrEmpty()]
-        [String]$Path,
-	
-	    [Parameter(Mandatory=$True,Position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del usuario o grupo a añadir.")]
-	    [ValidateNotNullOrEmpty()]
-        [String]$Destination
+		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del usuario o grupo a añadir.")]
+		[ValidateNotNullOrEmpty()]
+		[String]$Path,
+		
+		[Parameter(Mandatory = $True, Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del usuario o grupo a añadir.")]
+		[ValidateNotNullOrEmpty()]
+		[String]$Destination
 	)
 	
-    Process {
-	    $Files = Get-ChildItem $Path -Recurse
+	Process
+	{
+		$Files = Get-ChildItem $Path -Recurse
+		$Destination = $Destination.TrimEnd("\")
 		[Int]$i = 0
-	    Foreach ($File in $Files) {
-            $i++
-		    If ($File.PSIsContainer -and $Files.mode.Contains("a")) {
-                mkdir $File.PSParentPath -Force | Out-Null
-		    }
-            If ($Destination.EndsWith("\")) {
-                $Destination = $Destination.TrimEnd("\")
-            }
-            $Dest = $Destination + $File.PSPath.Substring(38).Replace($Path,"")
-			Try {
-	        	Copy-Item -Path ($File.PSPath.Substring(38)) -Destination "$Dest" -Force
+		Foreach ($File in $Files)
+		{
+			$i++
+			If ($File.PSIsContainer -and $Files.mode.Contains("a"))
+			{
+				mkdir $File.PSParentPath -Force | Out-Null
 			}
-			Catch {
+			$Dest = $Destination + $File.PSPath.Substring(38).Replace($Path, "")
+			Try
+			{
+				Copy-Item -Path ($File.PSPath.Substring(38)) -Destination "$Dest" -Force
+			}
+			Catch
+			{
 				New-MsgBox -Message "$_" -Title "Error" | Out-Null
 			}
 			[Int]$Percent = (($i / $Files.Length) * 100)
-            Write-Progress -Activity "Copiando" -Status "$Percent %  Completado" -CurrentOperation "Copiando '$File' a '$Dest'" -PercentComplete $Percent
-	    }
-        Write-Progress -Activity "Copiando" -Completed
-    }
+			Write-Progress -Activity "Copiando" -Status "$Percent %  Completado" -CurrentOperation "Copiando '$File' a '$Dest'" -PercentComplete $Percent
+		}
+		Write-Progress -Activity "Copiando" -Completed
+	}
 }
 
 Export-ModuleMember Copy-ItemWithProgress
