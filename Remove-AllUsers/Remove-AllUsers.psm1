@@ -25,14 +25,14 @@ function Remove-AllUsers
 	[CmdletBinding()]
 	Param (
 		[Parameter(ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del recurso compartido existente.")]
-		[String[]]$Exclude,
+		[Array]$Exclude,
 		[Parameter(ValueFromPipeline = $true, Position = 1, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del recurso compartido existente.")]
 		[Switch]$All = $false
 	)
 	#endregion
 	
 	#Se obtiene la lista de usuarios
-	[String[]]$LocalUsers = (Get-WmiObject -Class win32_UserAccount).Name
+	$LocalUsers = (Get-WmiObject -Class win32_UserAccount).Name
 	if (!($All))
 	{
 		$Exclude += @("Administrador", "Invitado")
