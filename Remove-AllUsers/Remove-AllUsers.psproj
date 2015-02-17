@@ -1,0 +1,11 @@
+﻿<Project>
+  <Version>1</Version>
+  <FileID>e2dbb51e-b3cc-4d8e-9e5e-f97ead148f36</FileID>
+  <ProjectType>1</ProjectType>
+  <Files>
+    <File ReferenceName="" Build="2">Remove-AllUsers.psd1</File>
+    <File ReferenceName="" Build="0">Remove-AllUsers.psm1</File>
+  </Files>
+  <StartupScript>
+  </StartupScript>
+</Project>

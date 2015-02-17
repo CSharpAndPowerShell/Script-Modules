@@ -7,7 +7,7 @@ Function New-NetworkDrive
     Conectar y renombrar unidades de red.
     
     .DESCRIPTION
-    Esta función necesita tres parámetros; "Letter" y "Path", ambos son obligatorios.
+    Esta función necesita tres parámetros; "Letter" y "Path", ambos son obligatorios. Si no se establece el parámetro "Name", la unidad tomará el nombre del recurso compartido.
  
     .EXAMPLE
     New-NetworkDrive -Letter "Z" -Path "\\127.0.0.1\C$"
@@ -69,7 +69,7 @@ Function New-NetworkDrive
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error"
+			New-MsgBox -Message "$_" -Title "Error" | Out-Null
 		}
 	}
 }
