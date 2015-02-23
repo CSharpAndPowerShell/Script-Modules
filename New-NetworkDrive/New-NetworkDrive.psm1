@@ -35,7 +35,10 @@ Function New-NetworkDrive
 		[Parameter(Position = 4, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre de la unidad de red.")]
 		[String]$Name
 	)
-	
+	Begin
+	{
+		$WshNetwork = New-Object -ComObject Wscript.Network
+	}
 	Process
 	{
 		$Drive = $Letter + ":"
@@ -46,25 +49,28 @@ Function New-NetworkDrive
 			{
 				If ($Pass.Length -ne 0)
 				{
-					Invoke-Expression "net use $Drive '$Path' /user:$User '$Pass' /Persistent:No" | Out-Null
+					$WshNetwork.MapNetworkDrive("$Drive", "$Path", $false, "$User", "$Pass")
 				}
 				Else
 				{
-					Invoke-Expression "net use $Drive '$Path' /user:$User /Persistent:No" | Out-Null
+					$WshNetwork.MapNetworkDrive("$Drive", "$Path", $false, "$User")
 				}
 			}
 			Else
 			{
-				Invoke-Expression "net use $Drive '$Path' /Persistent:No" | Out-Null
+				$WshNetwork.MapNetworkDrive("$Drive", "$Path", $false)
 			}
 			If ($Name.Length -ne 0)
 			{
-				Rename-NetworkDrive -Letter $Letter -Name "$Name"
-			}
-			Else
-			{
-				$Name = $Path.Split("\")[-1]
-				Rename-NetworkDrive -Letter $Letter -Name "$Name"
+				If (Test-Path "$Drive")
+				{
+					Rename-NetworkDrive -Letter $Letter -Name "$Name"
+				}
+				Else
+				{
+					$Name = $Path.Split("\")[-1]
+					Rename-NetworkDrive -Letter $Letter -Name "$Name"
+				}
 			}
 		}
 		Catch
