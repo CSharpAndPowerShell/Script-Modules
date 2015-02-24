@@ -1,0 +1,11 @@
+﻿<Project>
+  <Version>1</Version>
+  <FileID>12f1c7cd-186a-4586-a25a-30f476e28227</FileID>
+  <ProjectType>1</ProjectType>
+  <Files>
+    <File ReferenceName="" Build="2">Remove-NetworkDrive.psd1</File>
+    <File ReferenceName="" Build="0">Remove-NetworkDrive.psm1</File>
+  </Files>
+  <StartupScript>
+  </StartupScript>
+</Project>

@@ -7,12 +7,12 @@ Function New-NetworkDrive
     Conectar y renombrar unidades de red.
     
     .DESCRIPTION
-    Esta función necesita tres parámetros; "Letter" y "Path", ambos son obligatorios. Si no se establece el parámetro "Name", la unidad tomará el nombre del recurso compartido.
- 
+    Esta función necesita dos parámetros; "Letter" y "Path", ambos son obligatorios. Si no se establece el parámetro "Name", la unidad tomará el nombre del recurso compartido, no se muestra el nombre del host ni la dirección IP donde se encuentra el recurso compartido.
+	
     .EXAMPLE
     New-NetworkDrive -Letter "Z" -Path "\\127.0.0.1\C$"
     New-NetworkDrive -Letter "Z" -Path "\\127.0.0.1\C$" -Name "Sistema"
- 
+	
     .NOTES
     Escrito por Cristopher Robles
 	
@@ -41,7 +41,7 @@ Function New-NetworkDrive
 	}
 	Process
 	{
-		$Drive = $Letter + ":"
+		$Letter = $Letter + ":"
 		$Path = $Path.TrimEnd("\")
 		Try
 		{
@@ -49,25 +49,27 @@ Function New-NetworkDrive
 			{
 				If ($Pass.Length -ne 0)
 				{
-					$WshNetwork.MapNetworkDrive("$Drive", "$Path", $false, "$User", "$Pass")
+					$WshNetwork.MapNetworkDrive("$Letter", "$Path", $false, "$User", "$Pass")
 				}
 				Else
 				{
-					$WshNetwork.MapNetworkDrive("$Drive", "$Path", $false, "$User")
+					$WshNetwork.MapNetworkDrive("$Letter", "$Path", $false, "$User")
 				}
 			}
 			Else
 			{
-				$WshNetwork.MapNetworkDrive("$Drive", "$Path", $false)
+				$WshNetwork.MapNetworkDrive("$Letter", "$Path", $false)
 			}
 			If ($Name.Length -ne 0)
 			{
-				If (Test-Path "$Drive")
+				If (Test-Path "$Letter")
 				{
+					$Letter = $Letter.TrimEnd(":")
 					Rename-NetworkDrive -Letter $Letter -Name "$Name"
 				}
 				Else
 				{
+					$Letter = $Letter.TrimEnd(":")
 					$Name = $Path.Split("\")[-1]
 					Rename-NetworkDrive -Letter $Letter -Name "$Name"
 				}
