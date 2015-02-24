@@ -9,7 +9,7 @@ Function Install-Program
     
     .DESCRIPTION
     Se encarga de instalar de manera desatendida paquetes MSI y EXE.
-
+	
     .EXAMPLE
     Install-Program -Path C:\Ruta\Teamviewer.msi
 	Install-Program -Path C:\Ruta\Teamviewer.exe
@@ -21,8 +21,8 @@ Function Install-Program
     https://github.com/PowerShellScripting
     #>
 	
-	[CmdletBinding()]
-	Param (
+	Param
+	(
 		[parameter(mandatory = $true, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Ruta del instalador con extensión .msi.")]
 		[ValidateNotNullorEmpty()]
 		[string]$Path
@@ -47,5 +47,3 @@ Function Install-Program
 		}
 	}
 }
-
-Export-ModuleMember Install-Program
