@@ -19,7 +19,6 @@ Function New-MsgBox
     https://github.com/PowerShellScripting
     #>
 	
-	[CmdletBinding()]
 	Param (
 		[Parameter(ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true, HelpMessage = "Cuerpo de la ventana.")]
 		[string]$Message,
@@ -29,7 +28,6 @@ Function New-MsgBox
 		[ValidateSet("OK", "OKCancel", "AbortRetryIgnore", "YesNoCancel", "YesNo", "RetryCancel")]
 		[String]$Buttons = "OK"
 	)
+	[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
 	[System.Windows.Forms.MessageBox]::Show("$Message", "$Title", $Buttons)
 }
-
-Export-ModuleMember New-MsgBox

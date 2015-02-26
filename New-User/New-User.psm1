@@ -1,7 +1,8 @@
 ﻿#requires -RunAsAdministrator
 #requires -Modules New-Group, Add-ToGroup, New-MsgBox
 #requires -Version 4.0
-Function New-User {
+Function New-User
+{
     <#
     .SYNOPSIS
     Crear usuarios locales.
@@ -20,76 +21,98 @@ Function New-User {
     .LINK
     https://github.com/PowerShellScripting
     #>
-    
-    [CmdletBinding()]
-    Param (
-		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del nuevo usuario.")]
+	
+	Param (
+		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del nuevo usuario.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name,
-		[Parameter(Position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Contraseña para el nuevo usuario.")]
-		[String]$Pass,
-		[Parameter(Position=2,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Descripción del nuevo usuario.")]
+		[Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Contraseña para el nuevo usuario.")]
+		[String]$Password,
+		[Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Descripción del nuevo usuario.")]
 		[String]$Description,
-		[Parameter(Position=3,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Carpeta personal del nuevo usuario.")]
+		[Parameter(Position = 3, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Carpeta personal del nuevo usuario.")]
 		[String]$HomeDirectory,
-		[Parameter(Position=4,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Script de inicio de sesión para el nuevo usuario.")]
+		[Parameter(Position = 4, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Script de inicio de sesión para el nuevo usuario.")]
 		[String]$LoginScript,
-		[Parameter(Position=5,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Ruta al perfil para el nuevo usuario.")]
+		[Parameter(Position = 5, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Ruta al perfil para el nuevo usuario.")]
 		[String]$Profile,
-		[Parameter(Position=6,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Letra en la que se montará el 'HomeDirectory'.")]
+		[Parameter(Position = 6, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Letra en la que se montará el 'HomeDirectory'.")]
 		[String]$HomeDirDrive,
-		[Parameter(Position=7,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Grupo al que pertenecerá el nuevo usuario.")]
+		[Parameter(Position = 7, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Grupo al que pertenecerá el nuevo usuario.")]
 		[String]$Group
 	)
 	
-    Process {
-		Try {
-            $LocalUsers = (Get-WmiObject -Class Win32_UserAccount).Name
-	        if (!($LocalUsers.Contains($Name))) { #Se valida si el usuario existe
-		        #Objeto con la conexión de ruta donde se crearán los usuarios 
-		        $Computer = [adsi]"WinNT://$ENV:COMPUTERNAME"
-		        #Objeto que llamará metodos del API para asignar del usuario para luego crearlo
-		        $User = $Computer.Create("user", $Name) #Se establece el nombre completo para el usuario
-		        $User.Put("Fullname", $Name)
-		        If ($Pass.Length -ne 0) { #Comprueba si el usuario se creará con contraseña
-			        $User.SetPassword($Pass)
+	Begin
+	{
+		#Objeto con la conexión de ruta donde se crearán los usuarios
+		$Computer = [adsi]"WinNT://$ENV:COMPUTERNAME"
+	}
+	
+	Process
+	{
+		Try
+		{
+			$LocalUsers = (Get-WmiObject -Class Win32_UserAccount).Name
+			if (!($LocalUsers.Contains($Name)))
+			{
+				#Se valida si el usuario existe
+				#Objeto que llamará metodos del API para asignar del usuario para luego crearlo
+				$User = $Computer.Create("user", $Name) #Se establece el nombre completo para el usuario
+				$User.Put("Fullname", $Name)
+				If ($Pass.Length -ne 0)
+				{
+					#Comprueba si el usuario se creará con contraseña
+					$User.SetPassword($Pass)
 				}
-		        $User.SetInfo() #Se crea el usuario con los valores anteriores
-		        If ($Description.Length -ne 0) { #Se asigna descripción del usuario
-			        $User.Description = $Description
-		        }
-		        If ($HomeDirectory.Length -ne 0) { #Comprueba si se ha asignado una carpeta particular al usuario
-			        #Se asigna carpeta particular al usuario
-			        $User.Put("HomeDirectory",$HomeDirectory)
-		        }
-		        If ($LoginScript.Length -ne 0) { #Comprueba si se ha asignado un script de inicio de sesión al usuario
-			        #Se asigna script de inicio de sesión al usuario
-			        $User.Put("LoginScript",$LoginScript)
-		        }
-		        If ($Profile.Length -ne 0) { #Comprueba si se ha asignado un perfil mandatorio al usuario
-			        $User.Put("Profile",$Profile)
-		        }
-		        If ($HomeDirDrive.Length -ne 0) { #Comprueba si se ha asignado una unidad en red al usuario
-			        $User.Put("HomeDirDrive",$HomeDirDrive)
-		        }
-		        #El usuario no puede cambiar contraseña y contraseña no caduca
-		        $User.UserFlags = 64+65536
-		        #Se aplican los cambios al usuario
-		        $User.SetInfo()
-		        If ($Group.Length -ne 0) { #Comprueba si el usuario será agregado a un grupo local
-                    New-Group -Name $Group
-			        Add-ToGroup -Name $Name -Group $Group
-		        }
-	        }
-	        ElseIf ($Group.Length -ne 0) { #Si el usuario ya existe, Se agrega el usuario al grupo local
-                New-Group -Name $Group
-			    Add-ToGroup -Name $Name -Group $Group
-            }
-	    }
-		Catch {
+				$User.SetInfo() #Se crea el usuario con los valores anteriores
+				If ($Description.Length -ne 0)
+				{
+					#Se asigna descripción del usuario
+					$User.Description = $Description
+				}
+				If ($HomeDirectory.Length -ne 0)
+				{
+					#Comprueba si se ha asignado una carpeta particular al usuario
+					#Se asigna carpeta particular al usuario
+					$User.Put("HomeDirectory", $HomeDirectory)
+				}
+				If ($LoginScript.Length -ne 0)
+				{
+					#Comprueba si se ha asignado un script de inicio de sesión al usuario
+					#Se asigna script de inicio de sesión al usuario
+					$User.Put("LoginScript", $LoginScript)
+				}
+				If ($Profile.Length -ne 0)
+				{
+					#Comprueba si se ha asignado un perfil mandatorio al usuario
+					$User.Put("Profile", $Profile)
+				}
+				If ($HomeDirDrive.Length -ne 0)
+				{
+					#Comprueba si se ha asignado una unidad en red al usuario
+					$User.Put("HomeDirDrive", $HomeDirDrive)
+				}
+				#El usuario no puede cambiar contraseña y contraseña no caduca
+				$User.UserFlags = 64 + 65536
+				#Se aplican los cambios al usuario
+				$User.SetInfo()
+				If ($Group.Length -ne 0)
+				{
+					#Comprueba si el usuario será agregado a un grupo local
+					New-Group -Name $Group
+					Add-ToGroup -Name $Name -Group $Group
+				}
+			}
+			If ($Group.Length -ne 0)
+			{
+				#Si el usuario ya existe, Se agrega el usuario al grupo local
+				New-Group -Name $Group
+				Add-ToGroup -Name $Name -Group $Group
+			}
+		}
+		Catch
+		{
 			New-MsgBox -Message "$_" -Title "Error" | Out-Null
 		}
-    }
+	}
 }
-
-Export-ModuleMember New-User
