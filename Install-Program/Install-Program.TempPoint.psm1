@@ -15,7 +15,7 @@ Function Install-Program
 	Install-Program -Path C:\Ruta\Teamviewer.exe
  
     .NOTES
-    Escrito por Cristopher Robles y Leider Rivera Martínez
+    Escrito por Cristopher Robles
  
     .LINK
     https://github.com/PowerShellScripting
