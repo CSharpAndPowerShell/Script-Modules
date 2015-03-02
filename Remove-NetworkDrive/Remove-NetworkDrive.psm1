@@ -51,12 +51,7 @@
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title"Error" | Out-Null
+			New-MsgBox -Message "$_" -Title "Error" | Out-Null
 		}
 	}
 }
-
-Export-ModuleMember Remove-NetworkDrive
-
-
-
