@@ -41,7 +41,6 @@ Function New-NetworkDrive
 	}
 	Process
 	{
-		$Letter = $Letter + ":"
 		$Path = $Path.TrimEnd("\")
 		Try
 		{
@@ -49,31 +48,27 @@ Function New-NetworkDrive
 			{
 				If ($Pass.Length -ne 0)
 				{
-					$WshNetwork.MapNetworkDrive("$Letter", "$Path", $false, "$User", "$Pass")
+					$WshNetwork.MapNetworkDrive("$Letter" + ":", "$Path", $false, "$User", "$Pass")
 				}
 				Else
 				{
-					$WshNetwork.MapNetworkDrive("$Letter", "$Path", $false, "$User")
+					$WshNetwork.MapNetworkDrive("$Letter" + ":", "$Path", $false, "$User")
 				}
 			}
 			Else
 			{
-				$WshNetwork.MapNetworkDrive("$Letter", "$Path", $false)
+				$WshNetwork.MapNetworkDrive("$Letter" + ":", "$Path", $false)
 			}
 			If ($Name.Length -ne 0)
 			{
-				If (Test-Path "$Letter")
-				{
-					$Letter = $Letter.TrimEnd(":")
-					Rename-NetworkDrive -Letter $Letter -Name "$Name"
-				}
-				Else
-				{
-					$Letter = $Letter.TrimEnd(":")
-					$Name = $Path.Split("\")[-1]
-					Rename-NetworkDrive -Letter $Letter -Name "$Name"
-				}
+				Rename-NetworkDrive -Letter $Letter -Name "$Name"
 			}
+			Else
+			{
+				$Name = $Path.Split("\")[-1]
+				Rename-NetworkDrive -Letter $Letter -Name "$Name"
+			}
+			
 		}
 		Catch
 		{
@@ -81,5 +76,3 @@ Function New-NetworkDrive
 		}
 	}
 }
-
-Export-ModuleMember New-NetworkDrive
