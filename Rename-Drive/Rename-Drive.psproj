@@ -3,8 +3,8 @@
   <FileID>8bb07218-183a-4684-9823-98ab1100f64f</FileID>
   <ProjectType>1</ProjectType>
   <Files>
-    <File ReferenceName="" Build="2">Rename-NetworkDrive.psd1</File>
-    <File ReferenceName="" Build="0">Rename-NetworkDrive.psm1</File>
+    <File ReferenceName="" Build="2">Rename-Drive.psd1</File>
+    <File ReferenceName="" Build="0">Rename-Drive.psm1</File>
   </Files>
   <StartupScript>
   </StartupScript>

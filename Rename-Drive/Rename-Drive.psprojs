@@ -2,6 +2,7 @@
   <Version>1.0</Version>
   <FileID>8bb07218-183a-4684-9823-98ab1100f64f</FileID>
   <OpenFiles>
-    <File>Rename-NetworkDrive.psm1</File>
+    <File>Rename-Drive.psm1</File>
+    <File>Rename-Drive.psd1</File>
   </OpenFiles>
 </ProjectState>
