@@ -39,14 +39,13 @@
 				{
 					if ($Letter.Length -eq 2)
 					{
-						$WshNetwork.RemoveNetworkDrive($Letter, $true)
+						$WshNetwork.RemoveNetworkDrive($Letter + ":", $true)
 					}
 				}
 			}
 			else
 			{
-				$Letter = $Letter + ":"
-				$WshNetwork.RemoveNetworkDrive($Letter, $true)
+				$WshNetwork.RemoveNetworkDrive($Letter + ":", $true)
 			}
 		}
 		Catch
