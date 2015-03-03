@@ -1,4 +1,4 @@
-﻿#requires -Modules Rename-NetworkDrive
+﻿#requires -Modules Rename-Drive
 #requires -Version 4.0
 Function New-NetworkDrive
 {
@@ -61,14 +61,13 @@ Function New-NetworkDrive
 			}
 			If ($Name.Length -ne 0)
 			{
-				Rename-NetworkDrive -Letter $Letter -Name "$Name"
+				Rename-Drive -Letter $Letter -Name "$Name"
 			}
 			Else
 			{
 				$Name = $Path.Split("\")[-1]
-				Rename-NetworkDrive -Letter $Letter -Name "$Name"
+				Rename-Drive -Letter $Letter -Name "$Name"
 			}
-			
 		}
 		Catch
 		{
