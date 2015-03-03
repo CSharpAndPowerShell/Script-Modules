@@ -23,7 +23,6 @@ Function Copy-ItemWithProgress
 		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del usuario o grupo a añadir.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Path,
-		
 		[Parameter(Mandatory = $True, Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del usuario o grupo a añadir.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Destination
@@ -56,5 +55,3 @@ Function Copy-ItemWithProgress
 		Write-Progress -Activity "Copiando" -Completed
 	}
 }
-
-Export-ModuleMember Copy-ItemWithProgress

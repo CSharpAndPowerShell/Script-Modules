@@ -1,0 +1,11 @@
+﻿<Project>
+  <Version>1</Version>
+  <FileID>66877230-257f-446f-97dd-011b63879ad2</FileID>
+  <ProjectType>1</ProjectType>
+  <Files>
+    <File ReferenceName="" Build="2">New-AutoStartOnce.psd1</File>
+    <File ReferenceName="" Build="0">New-AutoStartOnce.psm1</File>
+  </Files>
+  <StartupScript>
+  </StartupScript>
+</Project>

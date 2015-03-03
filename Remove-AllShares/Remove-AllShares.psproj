@@ -1,0 +1,11 @@
+﻿<Project>
+  <Version>1</Version>
+  <FileID>934631ff-d3e3-43ac-b7fb-fa3f637dda05</FileID>
+  <ProjectType>1</ProjectType>
+  <Files>
+    <File ReferenceName="" Build="2">Remove-AllShares.psd1</File>
+    <File ReferenceName="" Build="0">Remove-AllShares.psm1</File>
+  </Files>
+  <StartupScript>
+  </StartupScript>
+</Project>

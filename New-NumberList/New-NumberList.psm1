@@ -1,5 +1,6 @@
 ﻿#requires -Version 4.0
-Function New-NumberList {
+Function New-NumberList
+{
     <#
     .SYNOPSIS
     Crea una lista de numeros.
@@ -24,32 +25,34 @@ Function New-NumberList {
     .LINK
     https://github.com/PowerShellScripting
     #>
-
-    [CmdletBinding()]
+	
 	Param (
-		[parameter(mandatory=$true,position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Inicio del contador.")]
+		[parameter(mandatory = $true, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Inicio del contador.")]
 		[ValidateNotNullorEmpty()]
 		[int]$Start,
-        [parameter(mandatory=$true,position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Fin del contador.")]
+		[parameter(mandatory = $true, position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Fin del contador.")]
 		[ValidateNotNullorEmpty()]
 		[int]$End
 	)
-    
-    Process {
-        [String[]]$Contar
-        For ($i = $Start; $i -le $End; $i++) {
-            If ($i -le 9) {
-                $tmp = '0' + $i
-            }
-            Else {
-                $tmp = $i + ""
-            }
-            $Count += @($tmp)
-        }
-    }
-    End {
-        Return $Count
-    }
+	
+	Process
+	{
+		[String[]]$Contar
+		For ($i = $Start; $i -le $End; $i++)
+		{
+			If ($i -le 9)
+			{
+				$tmp = '0' + $i
+			}
+			Else
+			{
+				$tmp = $i + ""
+			}
+			$Count += @($tmp)
+		}
+	}
+	End
+	{
+		Return $Count
+	}
 }
-
-Export-ModuleMember New-NumberList

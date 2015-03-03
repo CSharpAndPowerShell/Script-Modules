@@ -20,7 +20,6 @@ Function New-AutoStart
     https://github.com/PowerShellScripting
     #>
 	
-	[CmdletBinding()]
 	Param (
 		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Ruta al archivo a ejecutar en el siguiente reinicio.")]
 		[ValidateNotNullOrEmpty()]
@@ -35,5 +34,3 @@ Function New-AutoStart
 		Set-ItemProperty -Path hklm:\software\Microsoft\Windows\CurrentVersion\Run -Name $Name -Value $Value -Force | Out-Null
 	}
 }
-
-Export-ModuleMember New-AutoStart

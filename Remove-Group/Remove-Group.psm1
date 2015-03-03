@@ -1,7 +1,8 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
 #requires -Modules New-MsgBox
-Function Remove-Group {
+Function Remove-Group
+{
     <#
     .SYNOPSIS
     Borrar grupos de usuario locales.
@@ -19,26 +20,28 @@ Function Remove-Group {
     .LINK
     https://github.com/PowerShellScripting
     #>
-    
-    [CmdletBinding()]
-    Param (
-		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del grupo a eliminar.")]
+	
+	Param (
+		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del grupo a eliminar.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name
 	)
 	
-    Process {
-		Try {
-		    $Groups = (Get-WmiObject -Class Win32_Group).Name
-		    If ($Groups.Contains($Name)) { #Comprueba si el grupo local existe y lo elimina
-			    $Computer = [ADSI]"WinNT://$ENV:Computername"
-	            $Group = $Computer.Delete("Group",$Name)
-		    }
+	Process
+	{
+		Try
+		{
+			$Groups = (Get-WmiObject -Class Win32_Group).Name
+			If ($Groups.Contains($Name))
+			{
+				#Comprueba si el grupo local existe y lo elimina
+				$Computer = [ADSI]"WinNT://$ENV:Computername"
+				$Group = $Computer.Delete("Group", $Name)
+			}
 		}
-		Catch {
+		Catch
+		{
 			New-MsgBox -Message "$_" -Title "Error" | Out-Null
 		}
-    }
+	}
 }
-
-Export-ModuleMember Remove-Group

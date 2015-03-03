@@ -1,0 +1,11 @@
+﻿<Project>
+  <Version>1</Version>
+  <FileID>e55b82c9-392f-4e1b-91ec-f2ea4aeab29f</FileID>
+  <ProjectType>1</ProjectType>
+  <Files>
+    <File ReferenceName="" Build="2">New-Group.psd1</File>
+    <File ReferenceName="" Build="0">New-Group.psm1</File>
+  </Files>
+  <StartupScript>
+  </StartupScript>
+</Project>

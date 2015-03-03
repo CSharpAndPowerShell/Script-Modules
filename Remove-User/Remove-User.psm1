@@ -1,7 +1,8 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
 #requires -Modules New-MsgBox
-Function Remove-User {
+Function Remove-User
+{
     <#
     .SYNOPSIS
     Eliminar usuarios locales.
@@ -19,25 +20,27 @@ Function Remove-User {
     .LINK
     https://github.com/PowerShellScripting
     #>
-    
-    [CmdletBinding()]
-    Param (
-		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre de usuario a eliminar.")]
+	
+	Param (
+		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre de usuario a eliminar.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name
 	)
 	
-    Process {
-		Try {
-	        if ((Get-WmiObject -Class Win32_UserAccount).Name.Contains($Name)) { #Se valida si el usuario existe para borrarlo
-		        $Computer = [adsi]"WinNT://$ENV:COMPUTERNAME"
-		        $User = $Computer.Delete("user", $Name)
-	        }
+	Process
+	{
+		Try
+		{
+			if ((Get-WmiObject -Class Win32_UserAccount).Name.Contains($Name))
+			{
+				#Se valida si el usuario existe para borrarlo
+				$Computer = [adsi]"WinNT://$ENV:COMPUTERNAME"
+				$User = $Computer.Delete("user", $Name)
+			}
 		}
-		Catch {
+		Catch
+		{
 			New-MsgBox -Message "$_" -Title "Error" | Out-Null
 		}
-    }
+	}
 }
-
-Export-ModuleMember Remove-User

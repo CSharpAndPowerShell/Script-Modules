@@ -1,4 +1,7 @@
-﻿function Remove-NetworkDrive
+﻿#requires -RunAsAdministrator
+#requires -Version 4.0
+#requires -Modules New-MsgBox
+function Remove-NetworkDrive
 {
 	<#
     .SYNOPSIS
@@ -18,7 +21,6 @@
     https://github.com/PowerShellScripting
     #>
 	
-	[CmdletBinding()]
 	Param (
 		[Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Letra de la unidad a desmontar.")]
 		[Char]$Letter,

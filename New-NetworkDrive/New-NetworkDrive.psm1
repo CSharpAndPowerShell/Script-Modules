@@ -20,7 +20,6 @@ Function New-NetworkDrive
     https://github.com/PowerShellScripting
     #>
 	
-	[CmdletBinding()]
 	Param (
 		[Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Letra que será utilizada como punto de montaje para la unidad de red.")]
 		[ValidateNotNullOrEmpty()]
@@ -35,10 +34,12 @@ Function New-NetworkDrive
 		[Parameter(Position = 4, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre de la unidad de red.")]
 		[String]$Name
 	)
+	
 	Begin
 	{
 		$WshNetwork = New-Object -ComObject Wscript.Network
 	}
+	
 	Process
 	{
 		$Path = $Path.TrimEnd("\")

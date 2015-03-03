@@ -1,0 +1,11 @@
+﻿<Project>
+  <Version>1</Version>
+  <FileID>058ca5e8-b495-4ef5-85b1-e9333eef9895</FileID>
+  <ProjectType>1</ProjectType>
+  <Files>
+    <File ReferenceName="" Build="2">New-NumberList.psd1</File>
+    <File ReferenceName="" Build="0">New-NumberList.psm1</File>
+  </Files>
+  <StartupScript>
+  </StartupScript>
+</Project>

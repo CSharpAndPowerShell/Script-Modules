@@ -1,5 +1,7 @@
 ﻿<ProjectState>
   <Version>1.0</Version>
   <FileID>32a30059-f1e4-4302-8035-8c59f6bdc2c1</FileID>
-  <OpenFiles />
+  <OpenFiles>
+    <File>Add-SharePermission.psm1</File>
+  </OpenFiles>
 </ProjectState>

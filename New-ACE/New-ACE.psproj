@@ -1,0 +1,11 @@
+﻿<Project>
+  <Version>1</Version>
+  <FileID>340bafa8-e53f-44f6-b0bb-a2053f76dcb4</FileID>
+  <ProjectType>1</ProjectType>
+  <Files>
+    <File ReferenceName="" Build="2">New-ACE.psd1</File>
+    <File ReferenceName="" Build="0">New-ACE.psm1</File>
+  </Files>
+  <StartupScript>
+  </StartupScript>
+</Project>

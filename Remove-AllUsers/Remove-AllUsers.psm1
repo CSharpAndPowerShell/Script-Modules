@@ -22,7 +22,6 @@ function Remove-AllUsers
 	#>
 	
 	#region Parámetros
-	[CmdletBinding()]
 	Param (
 		[Parameter(ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del recurso compartido existente.")]
 		[Array]$Exclude,
@@ -52,5 +51,3 @@ function Remove-AllUsers
 		New-MsgBox -Message "$_" -Title "Error" | Out-Null
 	}
 }
-
-Export-ModuleMember Remove-AllUsers

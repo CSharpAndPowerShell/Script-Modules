@@ -24,7 +24,6 @@ Function Add-SharePermission
     https://github.com/PowerShellScripting
     #>
 	
-	[CmdletBinding()]
 	Param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del recurso compartido existente.")]
 		[String]$Sharename,

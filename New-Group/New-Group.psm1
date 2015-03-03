@@ -1,7 +1,8 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
 #requires -Modules New-MsgBox
-Function New-Group {
+Function New-Group
+{
     <#
     .SYNOPSIS
     Crear grupos de usuario locales.
@@ -19,35 +20,39 @@ Function New-Group {
     .LINK
     https://github.com/PowerShellScripting
     #>
-    
-    [CmdletBinding()]
-    Param (
-		[Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Nombre del nuevo grupo.")]
+	
+	Param (
+		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del nuevo grupo.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name,
-		[Parameter(Position=1,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,HelpMessage="Descripción del contenido o función del grupo.")]
+		[Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Descripción del contenido o función del grupo.")]
 		[String]$Description
 	)
 	
-    Process {
-        $LocalGroups = (Get-WmiObject -Class Win32_Group).Name
-        If (($Name -ne "Administradores") -and ($Name -ne "Usuarios")) { #Comprueba si el grupo local existe, si no existe se crea
-	        If (!($LocalGroups.Contains("$Name"))) {
-				Try {
-	                $Computer = [ADSI]"WinNT://$ENV:Computername"
-	                $Group = $Computer.Create("Group",$Name)
-	                $Group.SetInfo()
-	                If ($Description.Length -ne 0) {
-	                    $Group.Description = $Description
-	                    $Group.SetInfo()
-	                }
+	Process
+	{
+		$LocalGroups = (Get-WmiObject -Class Win32_Group).Name
+		If (($Name -ne "Administradores") -and ($Name -ne "Usuarios"))
+		{
+			#Comprueba si el grupo local existe, si no existe se crea
+			If (!($LocalGroups.Contains("$Name")))
+			{
+				Try
+				{
+					$Computer = [ADSI]"WinNT://$ENV:Computername"
+					$Group = $Computer.Create("Group", $Name)
+					$Group.SetInfo()
+					If ($Description.Length -ne 0)
+					{
+						$Group.Description = $Description
+						$Group.SetInfo()
+					}
 				}
-				Catch {
+				Catch
+				{
 					New-MsgBox -Message "$_" -Title "Error"
 				}
-	        }
-        }
-    }
+			}
+		}
+	}
 }
-
-Export-ModuleMember New-Group

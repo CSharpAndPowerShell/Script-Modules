@@ -20,7 +20,6 @@ Function Add-ToGroup
     https://github.com/PowerShellScripting
     #>
 	
-	[CmdletBinding()]
 	Param (
 		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del usuario o grupo a añadir.")]
 		[ValidateNotNullOrEmpty()]
@@ -32,7 +31,7 @@ Function Add-ToGroup
 	
 	Process
 	{
-		New-Group -Name $Name -Description "Este grupo ha sido creado de manera implicita por 'Add-ToGroup'."
+		New-Group -Name $Group -Description "Este grupo ha sido creado de manera implicita por 'Add-ToGroup'."
 		$LocalGroups = net localgroup $Group
 		If (!($LocalGroups.Contains("$Name")))
 		{
@@ -48,5 +47,3 @@ Function Add-ToGroup
 		}
 	}
 }
-
-Export-ModuleMember Add-ToGroup

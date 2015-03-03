@@ -28,6 +28,14 @@ Function New-MsgBox
 		[ValidateSet("OK", "OKCancel", "AbortRetryIgnore", "YesNoCancel", "YesNo", "RetryCancel")]
 		[String]$Buttons = "OK"
 	)
-	[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-	[System.Windows.Forms.MessageBox]::Show("$Message", "$Title", $Buttons)
+	
+	Begin
+	{
+		[void][reflection.assembly]::Load("System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
+	}
+	
+	Process
+	{
+		[System.Windows.Forms.MessageBox]::Show("$Message", "$Title", $Buttons)
+	}
 }

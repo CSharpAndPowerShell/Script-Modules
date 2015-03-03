@@ -19,7 +19,6 @@ Function Rename-Drive
     https://github.com/PowerShellScripting
     #>
 	
-	[CmdletBinding()]
 	Param (
 		[Parameter(Position = 0, Mandatory = $True, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Letra de la unidad local o de red a renombrar.")]
 		[ValidateNotNullOrEmpty()]

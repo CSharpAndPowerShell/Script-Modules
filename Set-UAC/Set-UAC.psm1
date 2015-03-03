@@ -1,7 +1,8 @@
 ﻿#requires -RunAsAdministrator
 #requires -Version 4.0
 #requires -Modules New-MsgBox
-Function Set-UAC {
+Function Set-UAC
+{
     <#
     .SYNOPSIS
     Modifica el control de cuentas de usuario.
@@ -19,30 +20,30 @@ Function Set-UAC {
     .LINK
     https://github.com/PowerShellScripting
     #>
-
-    [CmdletBinding()]
-    Param (
-        [Parameter(Position=0,HelpMessage="Habilita UAC (Control de cuentas de usuario).")]
-        [switch]$Enable=$false,
-        [Parameter(Position=0,HelpMessage="Deshabilita UAC (Control de cuentas de usuario).")]
-        [switch]$Disable=$false
-    )
 	
-    If($Enable -and $Disable) {
-		New-MsgBox -Message "No puede habilitar y deshabilitar esta función al mismo tiempo." -Title "Error"
-    }
-    Else {
-        Switch($true) {
-            $Disable {
+	Param (
+		[Parameter(Position = 0, HelpMessage = "Habilita UAC (Control de cuentas de usuario).")]
+		[switch]$Enable = $false,
+		[Parameter(Position = 0, HelpMessage = "Deshabilita UAC (Control de cuentas de usuario).")]
+		[switch]$Disable = $false
+	)
+	
+	If ($Enable -and $Disable)
+	{
+		New-MsgBox -Message "No puede habilitar y deshabilitar esta función al mismo tiempo." -Title "Error" | Out-Null
+	}
+	Else
+	{
+		Switch ($true)
+		{
+			$Disable {
 				$Value = 0
-            }
-            $Enable {
+			}
+			$Enable {
 				$Value = 1
-            }
-        }
+			}
+		}
 		Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name EnableLUA -Value $Value
 		Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name ConsentPromptBehaviorAdmin -Value $Value
-    }
+	}
 }
-
-Export-ModuleMember Set-UAC
