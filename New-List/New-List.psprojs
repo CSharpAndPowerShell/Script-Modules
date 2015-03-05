@@ -2,6 +2,7 @@
   <Version>1.0</Version>
   <FileID>058ca5e8-b495-4ef5-85b1-e9333eef9895</FileID>
   <OpenFiles>
-    <File>New-NumberList.psm1</File>
+    <File>New-List.psm1</File>
+    <File>New-List.psd1</File>
   </OpenFiles>
 </ProjectState>
