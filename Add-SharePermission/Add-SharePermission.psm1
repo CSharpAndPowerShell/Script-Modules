@@ -8,12 +8,21 @@ Function Add-SharePermission
     Agrega permisos a recursos compartidos, en equipos y servidores.
     
     .DESCRIPTION
-    Esta función necesita de todos sus parámetros. Le da permisos a un usuario o a un grupo sobre un recurso compartido.
-    El parámetro "Access" permite únicamente los siguientes modificadores:
+    Le da permisos a un usuario o a un grupo sobre un recurso compartido.
+	
+	.PARAMETER  <Sharename [String]>
+	Especifica el nombre del recurso compartido.
+	
+	.PARAMETER  <User [String]>
+	Especifica el nombre del usuario o grupo al que se le asignará el permiso.
+	
+	.PARAMETER  <Access [String]>
+	Especifica el tipo de acceso que se le da asignará al usuario.
+	permite únicamente los siguientes modificadores:
         FullControl - acceso total
         Change - permiso de cambiar
         Read - sólo lectura
- 
+	
     .EXAMPLE
     Add-SharePermission -Sharename "Casa" -User "Padres" -Access "FullControl"
  
@@ -48,22 +57,15 @@ Function Add-SharePermission
 				$ACE = $AClass.CreateInstance()
 				Switch ($Access)
 				{
-					'Read' {
-						$ACE.AccessMask = 1179817
-					}
-					'Change' {
-						$ACE.AccessMask = 1245631
-					}
-					'FullControl' {
-						$ACE.AccessMask = 2032127
-					}
+					'Read' { $ACE.AccessMask = 1179817 }
+					'Change' { $ACE.AccessMask = 1245631 }
+					'FullControl' { $ACE.AccessMask = 2032127 }
 				}
 				$ACE.AceFlags = 0
 				$ACE.AceType = 0
 				$ACE.Trustee = $Trustee
-				$LSSS = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$Sharename'"
-				$SD = Invoke-WmiMethod -InputObject $LSSS -Name GetSecurityDescriptor |
-				Select -ExpandProperty Descriptor
+				$Share = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$Sharename'"
+				$SD = Invoke-WmiMethod -InputObject $Share -Name GetSecurityDescriptor | Select -ExpandProperty Descriptor
 				$SClass = [WMIClass]"\\$ENV:COMPUTERNAME\root\cimv2:Win32_SecurityDescriptor"
 				$NewSD = $SClass.CreateInstance()
 				$NewSD.ControlFlags = $SD.ControlFlags
@@ -72,7 +74,6 @@ Function Add-SharePermission
 					$NewSD.DACL += $ACE0
 				}
 				$NewSD.DACL += $ACE
-				$Share = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$ShareName'"
 				$Share.SetSecurityDescriptor($NewSD) | Out-Null
 			}
 			Catch
