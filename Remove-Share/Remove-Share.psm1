@@ -37,12 +37,12 @@ Function Remove-Share
 			{
 				#Verifica si el recurso está compatido.
 				$Share = (Get-WmiObject Win32_Share -Filter "Name='$Sharename'")
+				$Share.Delete() | Out-Null
 				if ($RemovePath)
 				{
 					$SharePath = $Share.Path
 					Remove-Item -Path "$SharePath" -Recurse -Force
 				}
-				$Share.Delete() | Out-Null
 			}
 		}
 		Catch
