@@ -23,26 +23,26 @@ function Remove-AllUsers
 	
 	#region Parámetros
 	Param (
-		[Parameter(ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del recurso compartido existente.")]
+		[Parameter(ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre de usuarios a excluir, separado por comas.")]
 		[Array]$Exclude,
-		[Parameter(ValueFromPipeline = $true, Position = 1, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del recurso compartido existente.")]
+		[Parameter(ValueFromPipeline = $true, Position = 1, ValueFromPipelineByPropertyName = $true, HelpMessage = "Si se establece se eliminarán todos los usuarios, utilice 'Exclude'.")]
 		[Switch]$All = $false
 	)
 	#endregion
 	
 	#Se obtiene la lista de usuarios
-	$LocalUsers = (Get-WmiObject -Class win32_UserAccount).Name
+	$Users = (Get-WmiObject -Class win32_UserAccount).Name
 	if (!($All))
 	{
-		$Exclude += @("Administrador", "Invitado")
+		$Exclude += @("Administrador", "Invitado", 'HomeGroupUser$')
 	}
 	try
 	{
-		foreach ($User in $LocalUsers)
+		for ($i = 0; $i -lt $Users.Length; $i++)
 		{
-			if ((!($Exclude.Contains("$User"))) -and (!($User.Contains('$'))))
+			if (!($Exclude.Contains($Users[$i])))
 			{
-				$User | Remove-User
+				Remove-User $Users[$i]
 			}
 		}
 	}

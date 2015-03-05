@@ -29,55 +29,52 @@ Function Remove-AllShares
 		[Switch]$Hidden = $false
 	)
 	
-	Process
+	If ($NoSafe -and $Hidden)
 	{
-		If ($NoSafe -and $Hidden)
+		New-MsgBox -Message "No puede establecer varios modificadores simultaneamente." -Title "Error" | Out-Null
+	}
+	Else
+	{
+		Try
 		{
-			New-MsgBox -Message "No puede establecer varios modificadores simultaneamente." -Title "Error" | Out-Null
-		}
-		Else
-		{
-			Try
+			[Int]$i = 0
+			$Resources = (Get-WmiObject -Class WIN32_Share).Name #Obteniendo lista de recursos
+			Foreach ($Resource in $Resources)
 			{
-				[Int]$i = 0
-				$Resources = (Get-WmiObject -Class WIN32_Share).Name #Obteniendo lista de recursos
-				Foreach ($Resource in $Resources)
+				#Se eliminan los recursos
+				$i++
+				[Int]$Percent = (($i / $Resources.Length) * 100) #Porcentaje de la barra de progreso
+				Switch ($true)
 				{
-					#Se eliminan los recursos
-					$i++
-					[Int]$Percent = (($i / $Resources.Length) * 100) #Porcentaje de la barra de progreso
-					Switch ($true)
-					{
-						$NoSafe	{
+					$NoSafe	{
+						Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso
+						Remove-Share $Resource
+					}
+					$Hidden	{
+						If (($Resource -ne "ADMIN$") -and ($Resource -ne "IPC$") -and ($Resources.Length -gt 2) -and ($Resource -ne "NETLOGON") -and ($Resource -ne "SYSVOL"))
+						{
 							Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso
 							Remove-Share $Resource
 						}
-						$Hidden	{
-							If (($Resource -ne "ADMIN$") -and ($Resource -ne "IPC$") -and ($Resources.Length -gt 2) -and ($Resource -ne "NETLOGON") -and ($Resource -ne "SYSVOL"))
-							{
-								Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso
-								Remove-Share $Resource
-							}
-						}
-						Default
+					}
+					Default
+					{
+						If ((!($Resource.Contains("$"))) -and ($Resource -ne "NETLOGON") -and ($Resource -ne "SYSVOL"))
 						{
-							If ((!($Resource.Contains("$"))) -and ($Resource -ne "NETLOGON") -and ($Resource -ne "SYSVOL"))
-							{
-								Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso
-								Remove-Share $Resource
-							}
+							Write-Progress -Activity "Eliminando Recursos" -Status "$Percent %  Completado" -CurrentOperation "Eliminando $Resource..." -PercentComplete $Percent #Actualiza la barra de Progreso
+							Remove-Share $Resource
 						}
 					}
 				}
 			}
-			Catch
-			{
-				New-MsgBox -Message "$_" -Title "Error" | Out-Null
-			}
-			Finally
-			{
-				Write-Progress -Activity "Eliminando Recursos" -Completed #Actualiza la barra de Progreso
-			}
+		}
+		Catch
+		{
+			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+		}
+		Finally
+		{
+			Write-Progress -Activity "Eliminando Recursos" -Completed #Actualiza la barra de Progreso
 		}
 	}
 }

@@ -48,17 +48,21 @@ Function New-Share
 		[String]$Description
 	)
 	
+	Begin
+	{
+		$Shares = [WMICLASS]"WIN32_Share"
+	}
+	
 	Process
 	{
 		Try
 		{
 			If (!(test-path $Path))
 			{
-				New-Item $Path -type Directory -Force | Out-Null
+				mkdir $Path -Force | Out-Null
 			}
-			If (!(Get-WmiObject -Class "Win32_Share").Name.Contains($Sharename))
+			If (!((Get-WmiObject -Class "Win32_Share" -Filter "Name='$Sharename'").Name -eq $Sharename))
 			{
-				$Shares = [WMICLASS]"WIN32_Share"
 				If ($Description.Length -ne 0)
 				{
 					$Shares.Create($Path, $Sharename, 0, $Description) | Out-Null

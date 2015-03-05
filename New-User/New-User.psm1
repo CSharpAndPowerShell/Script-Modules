@@ -45,15 +45,14 @@ Function New-User
 	Begin
 	{
 		#Objeto con la conexión de ruta donde se crearán los usuarios
-		$Computer = [adsi]"WinNT://$ENV:COMPUTERNAME"
+		$Computer = [ADSI]"WinNT://$ENV:COMPUTERNAME"
 	}
 	
 	Process
 	{
 		Try
 		{
-			$LocalUsers = (Get-WmiObject -Class Win32_UserAccount).Name
-			if (!($LocalUsers.Contains($Name)))
+			if (!((Get-WmiObject -Class Win32_Account -Filter "Name='$Name'").Name -eq "$Name"))
 			{
 				#Se valida si el usuario existe
 				#Objeto que llamará metodos del API para asignar del usuario para luego crearlo
@@ -99,14 +98,12 @@ Function New-User
 				If ($Group.Length -ne 0)
 				{
 					#Comprueba si el usuario será agregado a un grupo local
-					New-Group -Name $Group
 					Add-ToGroup -Name $Name -Group $Group
 				}
 			}
 			If ($Group.Length -ne 0)
 			{
 				#Si el usuario ya existe, Se agrega el usuario al grupo local
-				New-Group -Name $Group
 				Add-ToGroup -Name $Name -Group $Group
 			}
 		}

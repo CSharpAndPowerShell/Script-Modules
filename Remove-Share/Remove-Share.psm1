@@ -11,7 +11,7 @@ Function Remove-Share
     Esta función necesita dos parámetros; "Name" y "Path", aunque solo el primero es obligatorio. Esta función verifica que el recurso esté compartido para intentar dejar de compartirlo. Si "RemovePath" se establece en $True se eliminará la carpeta que estaba compartida.
  
     .EXAMPLE
-    Remove-Share -Sharename "P" -RemovePath "C:\P"
+    Remove-Share -Sharename "P" -RemovePath
     Remove-Share "P"
  
     .NOTES
@@ -25,24 +25,24 @@ Function Remove-Share
 		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre de recurso compartido a eliminar.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Sharename,
-		[Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Ruta hacia el recurso compartido a eliminar.")]
-		[String]$Path
+		[Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Si se establece, se borra la carpeta compartida.")]
+		[Switch]$RemovePath = $false
 	)
 	
 	Process
 	{
 		Try
 		{
-			If ((Get-WmiObject -Class WIN32_Share).Name.Contains($Sharename))
+			If ((Get-WmiObject -Class WIN32_Share -Filter "Name='$Sharename'").Name -eq $Sharename)
 			{
 				#Verifica si el recurso está compatido.
-				$Share = (Get-WmiObject Win32_Share)[(Get-WmiObject Win32_Share).Name.IndexOf($Sharename)]
-				$Share.Delete() | Out-Null
-				If ($Path.Length -ne 0)
+				$Share = (Get-WmiObject Win32_Share -Filter "Name='$Sharename'")
+				if ($RemovePath)
 				{
-					#Se borra la carpeta compatida si se usa el parametro "Path"
-					Remove-Item $Path -Force -Recurse
+					$SharePath = $Share.Path
+					Remove-Item -Path "$SharePath" -Recurse -Force
 				}
+				$Share.Delete() | Out-Null
 			}
 		}
 		Catch

@@ -13,6 +13,7 @@ Function Remove-User
     .EXAMPLE
     Remove-User -Name "P"
     Remove-User "P"
+	"P" | Remove-User
  
     .NOTES
     Escrito por Cristopher Robles
@@ -27,14 +28,15 @@ Function Remove-User
 		[String]$Name
 	)
 	
+	Begin { $Computer = [ADSI]"WinNT://$ENV:COMPUTERNAME" }
+	
 	Process
 	{
 		Try
 		{
-			if ((Get-WmiObject -Class Win32_UserAccount).Name.Contains($Name))
+			if ((Get-WmiObject -Class Win32_UserAccount -Filter "Name='$Name'").Name -eq $Name)
 			{
 				#Se valida si el usuario existe para borrarlo
-				$Computer = [adsi]"WinNT://$ENV:COMPUTERNAME"
 				$User = $Computer.Delete("user", $Name)
 			}
 		}

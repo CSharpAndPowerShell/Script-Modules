@@ -24,7 +24,6 @@ Function Add-ToGroup
 		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del usuario o grupo a añadir.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name,
-		
 		[Parameter(Mandatory = $True, Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Grupo al que pertenecerá el usuario o grupo.")]
 		[String]$Group
 	)

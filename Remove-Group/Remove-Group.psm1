@@ -27,16 +27,16 @@ Function Remove-Group
 		[String]$Name
 	)
 	
+	Begin { $Computer = [ADSI]"WinNT://$ENV:Computername" }
+	
 	Process
 	{
 		Try
 		{
-			$Groups = (Get-WmiObject -Class Win32_Group).Name
-			If ($Groups.Contains($Name))
+			If ((Get-WmiObject -Class "Win32_Group" -Filter "Name='$Name'").Name -eq $Name)
 			{
 				#Comprueba si el grupo local existe y lo elimina
-				$Computer = [ADSI]"WinNT://$ENV:Computername"
-				$Group = $Computer.Delete("Group", $Name)
+				$Computer.Delete("Group", $Name)
 			}
 		}
 		Catch

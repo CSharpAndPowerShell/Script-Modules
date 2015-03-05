@@ -29,17 +29,20 @@ Function New-Group
 		[String]$Description
 	)
 	
+	Begin
+	{
+		$Computer = [ADSI]"WinNT://$ENV:Computername"
+	}
+	
 	Process
 	{
-		$LocalGroups = (Get-WmiObject -Class Win32_Group).Name
 		If (($Name -ne "Administradores") -and ($Name -ne "Usuarios"))
 		{
 			#Comprueba si el grupo local existe, si no existe se crea
-			If (!($LocalGroups.Contains("$Name")))
+			If (!((Get-WmiObject -Class Win32_Account -Filter "Name='$Name'").Name -eq "$Name"))
 			{
 				Try
 				{
-					$Computer = [ADSI]"WinNT://$ENV:Computername"
 					$Group = $Computer.Create("Group", $Name)
 					$Group.SetInfo()
 					If ($Description.Length -ne 0)

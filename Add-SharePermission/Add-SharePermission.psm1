@@ -36,7 +36,7 @@ Function Add-SharePermission
 	
 	Process
 	{
-		If ((Get-WmiObject -Class "Win32_Share").Name.Contains($Sharename))
+		If ((Get-WmiObject -Class "Win32_Share" -Filter "Name='$Sharename'").Name -eq $Sharename)
 		{
 			Try
 			{
@@ -61,7 +61,7 @@ Function Add-SharePermission
 				$ACE.AceFlags = 0
 				$ACE.AceType = 0
 				$ACE.Trustee = $Trustee
-				$LSSS = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$Sharename'" -ComputerName $env:COMPUTERNAME
+				$LSSS = Get-WmiObject -Class Win32_LogicalShareSecuritySetting -Filter "Name='$Sharename'"
 				$SD = Invoke-WmiMethod -InputObject $LSSS -Name GetSecurityDescriptor |
 				Select -ExpandProperty Descriptor
 				$SClass = [WMIClass]"\\$ENV:COMPUTERNAME\root\cimv2:Win32_SecurityDescriptor"
@@ -86,5 +86,3 @@ Function Add-SharePermission
 		}
 	}
 }
-
-Export-ModuleMember Add-SharePermission
