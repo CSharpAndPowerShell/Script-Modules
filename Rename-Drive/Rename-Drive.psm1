@@ -37,7 +37,7 @@ Function Rename-Drive
 	{
 		Try
 		{
-			$objDrive.NameSpace($Drive + ":").Self.Name = $Name
+			$objDrive.NameSpace($Letter + ":").Self.Name = $Name
 		}
 		Catch
 		{
