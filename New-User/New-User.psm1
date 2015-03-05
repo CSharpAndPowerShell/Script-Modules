@@ -25,6 +25,7 @@ Function New-User
 	Param (
 		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del nuevo usuario.")]
 		[ValidateNotNullOrEmpty()]
+		[ValidateLength(1, 14)] #El nombre del equipo debe tener al menos un caracter y máximo 14
 		[String]$Name,
 		[Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Contraseña para el nuevo usuario.")]
 		[String]$Password,
