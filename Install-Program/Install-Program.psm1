@@ -1,6 +1,5 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
+#requires -Modules Show-MessageBox
 Function Install-Program
 {
 	<#
@@ -38,12 +37,12 @@ Function Install-Program
 			}
 			ElseIf ($Path.EndsWith(".exe"))
 			{
-				Start-Process "$Path" /Silent -Wait
+				Start-Process "$Path" /install /quiet -Wait
 			}
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
 		}
 	}
 }

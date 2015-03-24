@@ -4,7 +4,7 @@
 ModuleToProcess = 'Install-Program.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.6.2.0'
+ModuleVersion = '1.6.2.1'
 
 # ID used to uniquely identify this module
 GUID = 'fc4102b8-6cc2-40cd-ac56-e1c2cd3e6d49'
@@ -22,7 +22,7 @@ Copyright = '(c) 2015. All rights reserved.'
 Description = 'Se encarga de instalar de manera desatendida paquetes MSI y EXE.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '4.0'
+PowerShellVersion = '2.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''
