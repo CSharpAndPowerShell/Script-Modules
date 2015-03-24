@@ -1,7 +1,7 @@
 ﻿@{
 
 # Script module or binary module file associated with this manifest
-ModuleToProcess = 'New-MsgBox.psm1'
+ModuleToProcess = 'Show-MessageBox.psm1'
 
 # Version number of this module.
 ModuleVersion = '1.6.2.0'
@@ -22,7 +22,7 @@ Copyright = '(c) 2015. All rights reserved.'
 Description = 'Muestra una ventana de información o de opciones.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '4.0'
+PowerShellVersion = '2.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''
