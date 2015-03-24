@@ -5,7 +5,7 @@
 ModuleToProcess = 'Get-AutoStart.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.6.2.0'
+ModuleVersion = '1.6.2.1'
 
 # ID used to uniquely identify this module
 GUID = 'd43b40bb-add6-4210-835a-a00929fbf939'

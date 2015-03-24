@@ -1,6 +1,5 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
+#requires -Modules Show-MessageBox
 Function Add-SharePermission
 {
     <#
@@ -78,12 +77,12 @@ Function Add-SharePermission
 			}
 			Catch
 			{
-				New-MsgBox -Message "$_" -Title "Error" | Out-Null
+				Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
 			}
 		}
 		Else
 		{
-			New-MsgBox -Message "No existe el recurso compartido '$ShareName'!`nImposible asignar permisos." -Title "Error" | Out-Null
+			Show-MessageBox -Message "No existe el recurso compartido '$ShareName'!`nImposible asignar permisos." -Title "Error" -Type Error | Out-Null
 		}
 	}
 }

@@ -4,7 +4,7 @@
 ModuleToProcess = 'Add-SharePermission.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.6.2.0'
+ModuleVersion = '1.6.2.1'
 
 # ID used to uniquely identify this module
 GUID = '32a30059-f1e4-4302-8035-8c59f6bdc2c1'
@@ -22,7 +22,7 @@ Copyright = '(c) 2015. All rights reserved.'
 Description = 'Agrega permisos a recursos compartidos, en equipos y servidores.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '4.0'
+PowerShellVersion = '2.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''
