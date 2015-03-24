@@ -1,6 +1,5 @@
 ﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
+#requires -Modules Show-MessageBox
 Function Add-ToGroup
 {
     <#
@@ -30,9 +29,23 @@ Function Add-ToGroup
 	
 	Process
 	{
-		New-Group -Name $Group -Description "Este grupo ha sido creado de manera implicita por 'Add-ToGroup'."
-		$LocalGroups = net localgroup $Group
-		If (!($LocalGroups.Contains("$Name")))
+        Function Test-User ($Group, $Name)
+        {
+            $LocalGroup = net localgroup $Group
+            for ($i = 0; $i -lt $LocalGroup.Length; $i++)
+            {
+                if ($LocalGroup.Get($i) -eq $Name)
+                {
+                    return $true
+                }
+                else
+                {
+                    return $false
+                }
+            }
+        }
+		New-Group -Name $Group -Description "Este grupo ha sido creado implicitamente por 'Add-ToGroup'."
+		If (!(Test-User -Group $Group -Name $Name))
 		{
 			Try
 			{
@@ -41,7 +54,7 @@ Function Add-ToGroup
 			}
 			Catch
 			{
-				New-MsgBox -Message "$_" -Title "Error" | Out-Null
+				Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 ModuleToProcess = 'Add-ToGroup.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.6.2.0'
+ModuleVersion = '1.6.2.1'
 
 # ID used to uniquely identify this module
 GUID = '18bb6cc7-4ee8-43d9-973d-e37e874e9b87'
@@ -22,7 +22,7 @@ Copyright = '(c) 2015. All rights reserved.'
 Description = 'Agrega usuarios o grupos a grupos locales.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '4.0'
+PowerShellVersion = '2.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''
