@@ -28,8 +28,8 @@
 		[ValidateSet("OK", "OKCancel", "AbortRetryIgnore", "YesNoCancel", "YesNo", "RetryCancel")]
 		[String]$Buttons = "OK",
         [Parameter(ValueFromPipeline = $true, Position = 3, ValueFromPipelineByPropertyName = $true, HelpMessage = "Tipo de ventana a mostrar.")]
-		[ValidateSet("Error", "Information", "Warning")]
-		[String]$Type = "Information"
+		[ValidateSet("Asterisk", "Exclamation", "None", "Question", "Stop", "Error", "Information", "Warning")]
+		[String]$Type = "None"
 	)
 	
 	Begin
