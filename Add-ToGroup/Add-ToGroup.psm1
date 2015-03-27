@@ -1,5 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Modules Show-MessageBox
+﻿#requires -Version 2.0
 Function Add-ToGroup
 {
     <#

@@ -1,5 +1,4 @@
-﻿#requires -Version 4.0
-#requires -Modules New-MsgBox
+﻿#requires -Version 2.0
 Function Rename-Drive
 {
     <#
@@ -41,7 +40,7 @@ Function Rename-Drive
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
 		}
 	}
 }

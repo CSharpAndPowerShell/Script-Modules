@@ -1,6 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
+﻿#requires -Version 2.0
 Function New-Group
 {
     <#
@@ -53,7 +51,14 @@ Function New-Group
 				}
 				Catch
 				{
-					New-MsgBox -Message "$_" -Title "Error"
+                    Try
+                    {
+					   Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
+                    }
+                    Catch
+                    {
+                        Write-Host "$_"
+                    }
 				}
 			}
 		}

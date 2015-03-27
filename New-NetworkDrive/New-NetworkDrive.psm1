@@ -1,5 +1,4 @@
-﻿#requires -Modules Rename-Drive
-#requires -Version 4.0
+﻿#requires -Version 2.0
 Function New-NetworkDrive
 {
     <#
@@ -72,7 +71,7 @@ Function New-NetworkDrive
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
 		}
 	}
 }

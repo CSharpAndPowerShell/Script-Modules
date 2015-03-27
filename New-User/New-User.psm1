@@ -1,6 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Modules New-Group, Add-ToGroup, New-MsgBox
-#requires -Version 4.0
+﻿#requires -Version 2.0
 Function New-User
 {
     <#
@@ -110,7 +108,7 @@ Function New-User
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
 		}
 	}
 }
