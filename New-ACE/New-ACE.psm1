@@ -1,6 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
+﻿#requires -Version 2.0
 Function New-ACE
 {
     <#
@@ -52,6 +50,6 @@ Function New-ACE
 	}
 	Catch
 	{
-		New-MsgBox -Message "$_" -Title "Error" | Out-Null
+		Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
 	}
 }
