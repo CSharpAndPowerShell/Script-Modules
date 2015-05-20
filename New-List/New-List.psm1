@@ -1,4 +1,4 @@
-﻿#requires -Version 4.0
+﻿#requires -Version 2.0
 Function New-List
 {
     <#
@@ -26,44 +26,22 @@ Function New-List
 		[int]$Start,
 		[parameter(mandatory = $true, position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Fin del primer contador en el campo 1 y fin del segundo contado en el campo 2.")]
 		[ValidateNotNullorEmpty()]
-		[int[]]$End
+		[int]$End
 	)
+	Begin
+	{
+		[array]$List = $null
+	}
 	
 	Process
 	{
-		function Count($Start, $End)
-		{
-			[String[]]$Contar
-			For ($i = $Start; $i -le $End; $i++)
-			{
-				If ($i -le 9)
-				{
-					$tmp = '0' + $i
-				}
-				Else
-				{
-					$tmp = $i + ""
-				}
-				$Count += @($tmp)
-			}
-			Return $Count
-		}
-		$Cont1 = Count $Start $End[0]
-		$Cont2 = Count 1 $End[1]
-		[String[]]$List
-		For ($f = ($Start - 1); $f -lt $Start; $f++)
-		{
-			For ($j = 1; $j -lt $Cont1.Length; $j++)
-			{
-				For ($i = 1; $i -lt $Cont2.Length; $i++)
-				{
-					$List += @($Prefix + $Cont1[$j] + $Cont2[$i])
-				}
-			}
+		$Start..$End | % {
+			if ($_ -le 9) { $t = '0' + $_ }
+			$List += "$Prefix" + "$t"
 		}
 	}
 	End
 	{
-		Return $List
+		return $List
 	}
 }
