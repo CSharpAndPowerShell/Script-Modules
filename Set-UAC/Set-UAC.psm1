@@ -1,6 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
+﻿#requires -Version 2.0
 Function Set-UAC
 {
     <#

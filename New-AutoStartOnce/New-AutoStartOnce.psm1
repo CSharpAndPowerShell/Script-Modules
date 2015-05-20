@@ -1,5 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
+﻿#requires -Version 2.0
 Function New-AutoStartOnce
 {
     <#

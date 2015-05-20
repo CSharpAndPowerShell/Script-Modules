@@ -1,6 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Modules Show-MessageBox
-Function Add-SharePermission
+﻿Function Add-SharePermission
 {
     <#
     .SYNOPSIS
