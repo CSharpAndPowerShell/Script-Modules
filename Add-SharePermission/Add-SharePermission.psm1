@@ -30,6 +30,7 @@
     https://github.com/PowerShellScripting
     #>
 	
+	#region "Parámetros"
 	Param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del recurso compartido existente.")]
 		[String]$Sharename,
@@ -39,14 +40,17 @@
 		[ValidateSet("Read", "Change", "FullControl")]
 		[String]$Access = "Read"
 	)
+	#endregion
 	
+	#region "Funciones"
+	#region "Processing Pipeline Input"
 	Process
 	{
 		If ((Get-WmiObject -Class "Win32_Share" -Filter "Name='$Sharename'").Name -eq $Sharename)
 		{
 			Try
 			{
-				$Tclass = [WMIClass]"\\$env:COMPUTERNAME\root\cimv2:Win32_Trustee"
+				$Tclass = [WMIClass]"\\$ENV:COMPUTERNAME\root\cimv2:Win32_Trustee"
 				$Trustee = $TClass.CreateInstance()
 				$Trustee.Domain = $ENV:USERDOMAIN
 				$Trustee.Name = $User
@@ -75,12 +79,28 @@
 			}
 			Catch
 			{
-				Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
+				try
+				{
+					Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
+				}
+				catch
+				{
+					Write-Error -Message "$_"
+				}
 			}
 		}
 		Else
 		{
-			Show-MessageBox -Message "No existe el recurso compartido '$ShareName'!`nImposible asignar permisos." -Title "Error" -Type Error | Out-Null
+			try
+			{
+				Show-MessageBox -Message "No existe el recurso compartido '$ShareName'!`nImposible asignar permisos." -Title "Error" -Type Error | Out-Null
+			}
+			catch
+			{
+				Write-Error -Message "No existe el recurso compartido '$ShareName'!`nImposible asignar permisos." -Category 'InvalidArgument'
+			}
 		}
 	}
+	#endregion
+	#endregion
 }
