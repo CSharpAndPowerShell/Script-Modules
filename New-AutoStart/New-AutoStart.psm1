@@ -1,6 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-Function New-AutoStart
+﻿Function New-AutoStart
 {
     <#
     .SYNOPSIS
@@ -20,17 +18,32 @@ Function New-AutoStart
     https://github.com/PowerShellScripting
     #>
 	
+	#region "Parametros"
 	Param (
 		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Ruta al archivo a ejecutar en el siguiente reinicio.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Value,
-		[Parameter(Mandatory = $True, Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre de la entrada que identifica el AutoStart.")]
+		[Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre de la entrada que identifica el AutoStart.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name
 	)
+	#endregion
 	
+	#region "Funciones"
 	Process
 	{
-		Set-ItemProperty -Path hklm:\software\Microsoft\Windows\CurrentVersion\Run -Name $Name -Value $Value -Force | Out-Null
+		if ($Name -eq $null)
+		{
+			$Name = $Value.Split("\")[-1]
+		}
+		try
+		{
+			Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run -Name $Name -Value $Value -Force -ErrorAction 'Stop' | Out-Null
+		}
+		catch
+		{
+			Write-Error -Message "No tiene permiso para realizar esta acción." -Category 'PermissionDenied'
+		}
 	}
+	#endregion
 }

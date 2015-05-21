@@ -1,5 +1,4 @@
-﻿#requires -Version 2.0
-Function New-ACE
+﻿Function New-ACE
 {
     <#
     .SYNOPSIS
@@ -18,6 +17,7 @@ Function New-ACE
     https://github.com/PowerShellScripting
     #>
 	
+	#region "Parametros"
 	Param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true, HelpMessage = "Ruta del archivo o carpeta a cambiar permisos.")]
 		[string]$Path,
@@ -30,26 +30,32 @@ Function New-ACE
 		[ValidateSet("Allow", "Deny")]
 		[string]$ACL = "Allow"
 	)
+	#endregion
 	
-	Try
+	#region "Funciones"
+	Process
 	{
-		If (!(Test-Path $Path))
+		Try
 		{
-			mkdir $Path -Force | Out-Null
+			If (!(Test-Path $Path))
+			{
+				mkdir $Path -Force | Out-Null
+			}
+			$Rights = [System.Security.AccessControl.FileSystemRights]$Right
+			$InheritanceFlag = [System.Security.AccessControl.InheritanceFlags]::ContainerInherit `
+			-bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit
+			$PropagationFlag = [System.Security.AccessControl.PropagationFlags]::None
+			$Type = [System.Security.AccessControl.AccessControlType]::$ACL
+			$ObjUser = New-Object System.Security.Principal.NTAccount("$ENV:USERDOMAIN\$User")
+			$Args = New-Object System.Security.AccessControl.FilesystemAccessRule($ObjUser, $Rights, $InheritanceFlag, $PropagationFlag, $Type)
+			$SetAcl = Get-Acl $Path
+			$SetAcl.AddAccessRule($Args)
+			Set-Acl $Path $SetAcl | Out-Null
 		}
-		$Rights = [System.Security.AccessControl.FileSystemRights]$Right
-		$InheritanceFlag = [System.Security.AccessControl.InheritanceFlags]::ContainerInherit `
-		-bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit
-		$PropagationFlag = [System.Security.AccessControl.PropagationFlags]::None
-		$Type = [System.Security.AccessControl.AccessControlType]::$ACL
-		$ObjUser = New-Object System.Security.Principal.NTAccount("$Env:USERDOMAIN\$User")
-		$Args = New-Object System.Security.AccessControl.FilesystemAccessRule($ObjUser, $Rights, $InheritanceFlag, $PropagationFlag, $Type)
-		$SetAcl = Get-Acl $Path
-		$SetAcl.AddAccessRule($Args)
-		Set-Acl $Path $SetAcl | Out-Null
+		Catch
+		{
+			Write-Error -Message "$_" -Category 'PermissionDenied'
+		}
 	}
-	Catch
-	{
-		Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
-	}
+	#endregion
 }

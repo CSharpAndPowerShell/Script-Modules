@@ -1,6 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Modules Show-MessageBox
-Function Install-Program
+﻿Function Install-Program
 {
 	<#
     .SYNOPSIS
@@ -20,13 +18,16 @@ Function Install-Program
     https://github.com/PowerShellScripting
     #>
 	
+	#region "Parámetros"
 	Param
 	(
 		[parameter(mandatory = $true, position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Ruta del instalador con extensión .msi.")]
 		[ValidateNotNullorEmpty()]
 		[string]$Path
 	)
+	#endregion
 	
+	#region "Funciones"
 	Process
 	{
 		Try
@@ -39,10 +40,15 @@ Function Install-Program
 			{
 				Start-Process "$Path" /install /quiet -Wait
 			}
+			Else
+			{
+				Write-Error -Message "El archivo '$_' no es un programa." -Category 'InvalidType'
+			}
 		}
 		Catch
 		{
-			Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
+			Write-Error -Message "$_" -Category 'ObjectNotFound'
 		}
 	}
+	#endregion
 }
