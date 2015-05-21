@@ -43,7 +43,6 @@
 	#endregion
 	
 	#region "Funciones"
-	#region "Processing Pipeline Input"
 	Process
 	{
 		If ((Get-WmiObject -Class "Win32_Share" -Filter "Name='$Sharename'").Name -eq $Sharename)
@@ -79,28 +78,13 @@
 			}
 			Catch
 			{
-				try
-				{
-					Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
-				}
-				catch
-				{
-					Write-Error -Message "$_"
-				}
+				Write-Error -Message "$_"
 			}
 		}
 		Else
 		{
-			try
-			{
-				Show-MessageBox -Message "No existe el recurso compartido '$ShareName'!`nImposible asignar permisos." -Title "Error" -Type Error | Out-Null
-			}
-			catch
-			{
-				Write-Error -Message "No existe el recurso compartido '$ShareName'!`nImposible asignar permisos." -Category 'InvalidArgument'
-			}
+			Write-Error -Message "No existe el recurso compartido '$ShareName'!`nImposible asignar permisos." -Category 'InvalidArgument'
 		}
 	}
-	#endregion
 	#endregion
 }

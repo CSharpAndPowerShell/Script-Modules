@@ -1,5 +1,4 @@
-﻿#requires -Version 2.0
-Function Add-ToGroup
+﻿Function Add-ToGroup
 {
     <#
     .SYNOPSIS
@@ -18,6 +17,7 @@ Function Add-ToGroup
     https://github.com/PowerShellScripting
     #>
 	
+	#region "Parámetros"
 	Param (
 		[Parameter(Mandatory = $True, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre del usuario o grupo a añadir.")]
 		[ValidateNotNullOrEmpty()]
@@ -25,36 +25,44 @@ Function Add-ToGroup
 		[Parameter(Mandatory = $True, Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Grupo al que pertenecerá el usuario o grupo.")]
 		[String]$Group
 	)
+	#endregion
 	
+	#region "Funciones"
 	Process
 	{
+		#region "Funciones Locales"
+		#Verifica si ya el usuario ha sido agregado al grupo
         Function Test-User ($Group, $Name)
-        {
-            $LocalGroup = net localgroup $Group
-            for ($i = 0; $i -lt $LocalGroup.Length; $i++)
+		{
+			#Obtiene la lista de usuarios que integran el grupo
+			$Users = net localgroup $Group
+            foreach ($User in $Users)
             {
-                if ($LocalGroup.Get($i) -eq $Name)
-                {
-                    return $true
-                }
-                else
+                if ($User -eq $Name)
                 {
                     return $false
                 }
+                else
+                {
+                    return $true
+                }
             }
-        }
-		New-Group -Name $Group -Description "Este grupo ha sido creado implicitamente por 'Add-ToGroup'."
-		If (!(Test-User -Group $Group -Name $Name))
+		}
+		#endregion
+		If (Test-User -Group $Group -Name $Name)
 		{
 			Try
 			{
+				#Si el grupo no existe se crea
+				New-Group -Name $Group -Description "Este grupo ha sido creado implicitamente por 'Add-ToGroup'."
 				$ToGroup = [ADSI]"WinNT://$ENV:Computername/$Group,group"
 				$ToGroup.Add("WinNT://$Name")
 			}
 			Catch
 			{
-				Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
+				Write-Error -Message "$_" -Category 'InvalidArgument'
 			}
 		}
 	}
+	#endregion
 }
