@@ -19,10 +19,10 @@ CompanyName = ''
 Copyright = '(c) 2015. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Registar un programa para que arranque automaticamente en el siguiente inicio de sesión de cualquier usuario por siempre, hasta que se elimine; usar "Remove-AutoStart".'
+Description = 'Elimina un programa que arranque automaticamente inicio de sesión de cualquier usuario.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '4.0'
+PowerShellVersion = '2.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''

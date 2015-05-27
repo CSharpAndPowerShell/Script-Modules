@@ -28,7 +28,7 @@
 	
 	If ($NoSafe -and $Hidden)
 	{
-		New-MsgBox -Message "No puede establecer varios modificadores simultaneamente." -Title "Error" | Out-Null
+		Show-MessageBox -Message "No puede establecer varios modificadores simultaneamente." -Title "Error" | Out-Null
 	}
 	Else
 	{
@@ -67,7 +67,7 @@
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" | Out-Null
 		}
 		Finally
 		{

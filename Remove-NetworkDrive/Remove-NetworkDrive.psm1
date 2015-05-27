@@ -1,7 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
-function Remove-NetworkDrive
+﻿function Remove-NetworkDrive
 {
 	<#
     .SYNOPSIS
@@ -52,7 +49,7 @@ function Remove-NetworkDrive
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" | Out-Null
 		}
 	}
 }

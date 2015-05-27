@@ -1,7 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
-Function Remove-User
+﻿Function Remove-User
 {
     <#
     .SYNOPSIS
@@ -42,7 +39,7 @@ Function Remove-User
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" | Out-Null
 		}
 	}
 }

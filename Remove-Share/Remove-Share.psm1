@@ -1,7 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
-Function Remove-Share
+﻿Function Remove-Share
 {
     <#
     .SYNOPSIS
@@ -47,7 +44,7 @@ Function Remove-Share
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" | Out-Null
 		}
 	}
 }

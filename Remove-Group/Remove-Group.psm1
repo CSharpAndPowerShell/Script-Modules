@@ -1,11 +1,8 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
-Function Remove-Group
+﻿Function Remove-Group
 {
     <#
     .SYNOPSIS
-    Borrar grupos de usuario locales.
+    Borrar grupos locales.
     
     .DESCRIPTION
     Esta función necesita un parámetro; "Name", esta función verifica que el grupo exista para intentar borrarlo.
@@ -41,7 +38,7 @@ Function Remove-Group
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" | Out-Null
 		}
 	}
 }

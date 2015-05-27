@@ -1,6 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-Function Set-Drives
+﻿Function Set-Drives
 {
     <#
     .SYNOPSIS

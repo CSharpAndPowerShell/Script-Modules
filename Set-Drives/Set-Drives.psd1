@@ -22,7 +22,7 @@ Copyright = '(c) 2015. All rights reserved.'
 Description = 'Restringe el acceso u oculta las unidades seleccionadas, al ocultar no se muestran las unidades en "Equipo", al restringir no se permite al acceso a las unidades.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '4.0'
+PowerShellVersion = '2.0'
 
 # Name of the Windows PowerShell host required by this module
 PowerShellHostName = ''

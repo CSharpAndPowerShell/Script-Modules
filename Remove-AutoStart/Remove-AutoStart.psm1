@@ -1,11 +1,8 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-#requires -Modules New-MsgBox
-Function Remove-AutoStart
+﻿Function Remove-AutoStart
 {
     <#
     .SYNOPSIS
-    Registar un programa para que arranque automaticamente en el siguiente inicio de sesión de cualquier usuario por siempre, hasta que se elimine; usar "Remove-AutoStart".
+    Elimina un programa que arranque automaticamente inicio de sesión de cualquier usuario.
     
     .DESCRIPTION
     Esta función necesita el parámetro "Name".
@@ -38,12 +35,12 @@ Function Remove-AutoStart
 			}
 			Else
 			{
-				New-MsgBox -Message "La entrada no existe" -Title "Advertencia" | Out-Null
+				Show-MessageBox -Message "La entrada no existe" -Title "Advertencia" | Out-Null
 			}
 		}
 		Catch
 		{
-			New-MsgBox -Message "$_" -Title "Error" | Out-Null
+			Show-MessageBox -Message "$_" -Title "Error" | Out-Null
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿#requires -Version 2.0
-Function Set-UAC
+﻿Function Set-UAC
 {
     <#
     .SYNOPSIS
@@ -28,7 +27,7 @@ Function Set-UAC
 	
 	If ($Enable -and $Disable)
 	{
-		New-MsgBox -Message "No puede habilitar y deshabilitar esta función al mismo tiempo." -Title "Error" | Out-Null
+		Show-MessageBox -Message "No puede habilitar y deshabilitar esta función al mismo tiempo." -Title "Error" | Out-Null
 	}
 	Else
 	{

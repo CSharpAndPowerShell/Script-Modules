@@ -1,6 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Version 4.0
-function Remove-AllUsers
+﻿function Remove-AllUsers
 {
 	<#
 	.SYNOPSIS
@@ -48,6 +46,6 @@ function Remove-AllUsers
 	}
 	catch
 	{
-		New-MsgBox -Message "$_" -Title "Error" | Out-Null
+		Show-MessageBox -Message "$_" -Title "Error" | Out-Null
 	}
 }
