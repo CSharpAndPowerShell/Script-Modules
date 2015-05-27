@@ -2,7 +2,7 @@
 {
     <#
     .SYNOPSIS
-    Registar un programa para que arranque automaticamente en el siguiente inicio de sesión de cualquier usuario por siempre, hasta que se elimine; usar "Remove-AutoStartAllways".
+    Registrar un programa para que arranque automaticamente en el siguiente inicio de sesión de cualquier usuario por siempre, hasta que se elimine; usar "Remove-AutoStart".
     
     .DESCRIPTION
     Esta función necesita dos parámetros, "Value" y "Name", con el valor de lo que se requiere iniciar automáticamente.

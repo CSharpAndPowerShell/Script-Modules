@@ -1,5 +1,4 @@
-﻿#requires -Version 2.0
-Function Rename-Drive
+﻿Function Rename-Drive
 {
     <#
     .SYNOPSIS
