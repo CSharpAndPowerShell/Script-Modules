@@ -1,11 +1,8 @@
-﻿#requires -RunAsAdministrator
-#requires -Modules Remove-Share, New-MsgBox
-#requires -Version 4.0
-Function Remove-AllShares
+﻿Function Remove-AllShares
 {
     <#
     .SYNOPSIS
-    Eliminar todos los recursos compartidos.
+    Elimina todos los recursos compartidos.
     
     .DESCRIPTION
     Esta función tiene los modificadores; "Hidden" y "NoSafe", aunque solo el primero es obligatorio. Esta función verifica que el recurso esté compartido para intentar dejar de compartirlo. Si "RemovePath" se establece en $True se eliminará la carpeta que estaba compartida.
