@@ -1,7 +1,4 @@
-﻿#requires -RunAsAdministrator
-#requires -Modules New-ACE, Add-SharePermissions, New-MsgBox
-#requires -Version 4.0
-Function New-Share
+﻿Function New-Share
 {
     <#
     .SYNOPSIS
