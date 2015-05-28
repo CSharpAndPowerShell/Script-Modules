@@ -54,6 +54,5 @@
 #Se utilizan alias para poder usar el módulo con otro nombre, para mantener compatibilidad
 New-Alias -Name Install-MSI -value Install-Program -Description "Consultar: Get-Help Install-Program"
 New-Alias -Name Install-EXE -value Install-Program -Description "Consultar: Get-Help Install-Program"
-Export-ModuleMember -Function Install-Program -Alias Install-MSI
-Export-ModuleMember -Function Install-Program -Alias Install-EXE
+Export-ModuleMember -Function * -Alias *
 #endregion

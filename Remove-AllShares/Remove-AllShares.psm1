@@ -18,17 +18,17 @@
     .LINK
     https://github.com/PowerShellScripting
     #>
-	
+	#region "Parámetros"
 	Param (
 		[Parameter(Position = 0, HelpMessage = "Se especifica para eliminar todos los recursos compartidos, incluyendo recursos administrativos de sistema.")]
 		[Switch]$NoSafe = $false,
 		[Parameter(Position = 0, HelpMessage = "Se especifica para eliminar todos los recursos compartidos y los ocultos, no elimina recursos administrativos.")]
 		[Switch]$Hidden = $false
 	)
-	
+	#endregion
 	If ($NoSafe -and $Hidden)
 	{
-		Show-MessageBox -Message "No puede establecer varios modificadores simultaneamente." -Title "Error" | Out-Null
+		Write-Error -Message "No puede establecer varios modificadores simultaneamente." -Category 'InvalidArgument'
 	}
 	Else
 	{
@@ -67,7 +67,7 @@
 		}
 		Catch
 		{
-			Show-MessageBox -Message "$_" -Title "Error" | Out-Null
+			Write-Error -Message "$_" -Category 'NotSpecified'
 		}
 		Finally
 		{
