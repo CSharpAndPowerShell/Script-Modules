@@ -32,29 +32,29 @@
 	{
 		#region "Funciones Locales"
 		#Verifica si ya el usuario ha sido agregado al grupo
-        Function Test-User ($Group, $Name)
+		Function Test-User ($Group, $Name)
 		{
+			#Crea el usuario si no existe
+			New-Group -Name $Group -Description "Este grupo ha sido creado implicitamente por 'Add-ToGroup'."
 			#Obtiene la lista de usuarios que integran el grupo
 			$Users = net localgroup $Group
-            foreach ($User in $Users)
-            {
-                if ($User -eq $Name)
-                {
-                    return $false
-                }
-                else
-                {
-                    return $true
-                }
-            }
+			foreach ($User in $Users)
+			{
+				if ($User -eq $Name)
+				{
+					return $false
+				}
+				else
+				{
+					return $true
+				}
+			}
 		}
 		#endregion
 		If (Test-User -Group $Group -Name $Name)
 		{
 			Try
 			{
-				#Si el grupo no existe se crea
-				New-Group -Name $Group -Description "Este grupo ha sido creado implicitamente por 'Add-ToGroup'."
 				$ToGroup = [ADSI]"WinNT://$ENV:Computername/$Group,group"
 				$ToGroup.Add("WinNT://$Name")
 			}
