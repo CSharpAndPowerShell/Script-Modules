@@ -23,39 +23,20 @@
 		[ValidateNotNullOrEmpty()]
 		[String]$Name,
 		[Parameter(Mandatory = $True, Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Grupo al que pertenecerá el usuario o grupo.")]
-		[String]$Group
+		[ValidateNotNullOrEmpty()]
+        [Array]$Group
 	)
 	#endregion
 	
 	#region "Funciones"
 	Process
 	{
-		#region "Funciones Locales"
-		#Verifica si ya el usuario ha sido agregado al grupo
-		Function Test-User ($Group, $Name)
-		{
-			#Crea el usuario si no existe
-			New-Group -Name $Group -Description "Este grupo ha sido creado implicitamente por 'Add-ToGroup'."
-			#Obtiene la lista de usuarios que integran el grupo
-			$Users = net localgroup $Group
-			foreach ($User in $Users)
-			{
-				if ($User -eq $Name)
-				{
-					return $false
-				}
-				else
-				{
-					return $true
-				}
-			}
-		}
-		#endregion
-		If (Test-User -Group $Group -Name $Name)
-		{
+        foreach ($G in $Group)
+        {
+            New-Group -Name $G -Description "Este grupo ha sido creado implicitamente por 'Add-ToGroup'."
 			Try
 			{
-				$ToGroup = [ADSI]"WinNT://$ENV:Computername/$Group,group"
+				$ToGroup = [ADSI]"WinNT://$ENV:Computername/$G,group"
 				$ToGroup.Add("WinNT://$Name")
 			}
 			Catch
@@ -63,6 +44,6 @@
 				Write-Error -Message "$_" -Category 'InvalidArgument'
 			}
 		}
-	}
-	#endregion
+    }
+    #endregion
 }
