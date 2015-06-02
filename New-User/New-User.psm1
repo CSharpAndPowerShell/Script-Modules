@@ -1,5 +1,4 @@
-﻿#requires -Version 2.0
-Function New-User
+﻿Function New-User
 {
     <#
     .SYNOPSIS
@@ -94,21 +93,23 @@ Function New-User
 				$User.UserFlags = 64 + 65536
 				#Se aplican los cambios al usuario
 				$User.SetInfo()
-				If ($Group.Length -ne 0)
-				{
-					#Comprueba si el usuario será agregado a un grupo local
-					Add-ToGroup -Name $Name -Group $Group
-				}
 			}
 			If ($Group.Length -ne 0)
 			{
 				#Si el usuario ya existe, Se agrega el usuario al grupo local
-				Add-ToGroup -Name $Name -Group $Group
+                try
+                {
+                	Add-ToGroup -Name $Name -Group $Group
+                }
+                catch
+                {
+                    Write-Warning -Message "El usuario ya pertenece al grupo."
+                }
 			}
 		}
 		Catch
 		{
-			Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
+			Write-Error -Message "$_"
 		}
 	}
 }
