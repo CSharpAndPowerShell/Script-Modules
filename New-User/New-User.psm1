@@ -97,19 +97,12 @@
             If ($Group -ne $null)
             {
 				#Si el usuario ya existe, Se agrega el usuario al grupo local
-                Try
-                {
-                    Add-ToGroup -Name $Name -Group $Group
-                }
-                Catch
-                {
-                    Write-Error -Message "$_"
-			    }
+                Add-ToGroup -Name $Name -Group $Group
             }
 		}
 		Catch
 		{
-			Write-Error -Message "$_"
+			Write-Error -Message "$_" -Category InvalidResult
 		}
 	}
 }

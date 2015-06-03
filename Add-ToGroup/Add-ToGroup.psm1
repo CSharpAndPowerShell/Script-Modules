@@ -31,18 +31,18 @@
 	#region "Funciones"
 	Process
 	{
-        foreach ($G in $Group)
+		Try
         {
-            New-Group -Name $G -Description "Este grupo ha sido creado implicitamente por 'Add-ToGroup'."
-			Try
-			{
+            foreach ($G in $Group)
+            {
+                New-Group -Name $G
 				$ToGroup = [ADSI]"WinNT://$ENV:Computername/$G,group"
 				$ToGroup.Add("WinNT://$Name")
-			}
-			Catch
-			{
-				Write-Error -Message "$_" -Category 'InvalidArgument'
-			}
+            }
+		}
+		Catch
+		{
+			Write-Error -Message "$_" -Category 'InvalidArgument'
 		}
     }
     #endregion

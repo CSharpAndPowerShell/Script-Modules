@@ -1,5 +1,4 @@
-﻿#requires -Version 2.0
-Function New-Group
+﻿Function New-Group
 {
     <#
     .SYNOPSIS
@@ -24,7 +23,7 @@ Function New-Group
 		[ValidateNotNullOrEmpty()]
 		[String]$Name,
 		[Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Descripción del contenido o función del grupo.")]
-		[String]$Description
+		[String]$Description = "Grupo creado automáticamente"
 	)
 	
 	Begin
@@ -51,14 +50,7 @@ Function New-Group
 				}
 				Catch
 				{
-                    Try
-                    {
-					   Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
-                    }
-                    Catch
-                    {
-                        Write-Host "$_"
-                    }
+                    Write-Error -Message "$_" -Category NotSpecified
 				}
 			}
 		}
