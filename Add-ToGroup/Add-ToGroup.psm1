@@ -24,7 +24,7 @@
 		[String]$Name,
 		[Parameter(Mandatory = $True, Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Grupo al que pertenecerá el usuario o grupo.")]
 		[ValidateNotNullOrEmpty()]
-        [Array]$Group
+        [String]$Group
 	)
 	#endregion
 	
@@ -33,12 +33,9 @@
 	{
 		Try
         {
-            foreach ($G in $Group)
-            {
-                New-Group -Name $G
-				$ToGroup = [ADSI]"WinNT://$ENV:Computername/$G,group"
-				$ToGroup.Add("WinNT://$Name")
-            }
+            New-Group -Name $Group
+			$ToGroup = [ADSI]"WinNT://$ENV:Computername/$Group,group"
+		    $ToGroup.Add("WinNT://$Name")
 		}
 		Catch
 		{

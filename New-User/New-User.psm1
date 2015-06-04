@@ -37,7 +37,7 @@
 		[Parameter(Position = 6, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Letra en la que se montará el 'HomeDirectory'.")]
 		[String]$HomeDirDrive,
 		[Parameter(Position = 7, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Grupo al que pertenecerá el nuevo usuario.")]
-		[Array]$Group
+		[String]$Group = "Usuarios"
 	)
 	
 	Begin
@@ -94,7 +94,7 @@
 				#Se aplican los cambios al usuario
 				$User.SetInfo()
 			}
-            If ($Group -ne $null)
+            If ($Group.Length -ne 0)
             {
 				#Si el usuario ya existe, Se agrega el usuario al grupo local
                 Add-ToGroup -Name $Name -Group $Group
