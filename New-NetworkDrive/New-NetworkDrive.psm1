@@ -1,5 +1,4 @@
-﻿#requires -Version 2.0
-Function New-NetworkDrive
+﻿Function New-NetworkDrive
 {
     <#
     .SYNOPSIS
@@ -59,19 +58,15 @@ Function New-NetworkDrive
 			{
 				$WshNetwork.MapNetworkDrive("$Letter" + ":", "$Path", $false)
 			}
-			If ($Name.Length -ne 0)
+			If ($Name.Length -eq 0)
 			{
-				Rename-Drive -Letter $Letter -Name "$Name"
+                $Name = $Path.Split("\")[-1]
 			}
-			Else
-			{
-				$Name = $Path.Split("\")[-1]
-				Rename-Drive -Letter $Letter -Name "$Name"
-			}
+		    Rename-Drive -Letter $Letter -Name "$Name"
 		}
 		Catch
 		{
-			Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
+			Write-Error -Message "$_"
 		}
 	}
 }
