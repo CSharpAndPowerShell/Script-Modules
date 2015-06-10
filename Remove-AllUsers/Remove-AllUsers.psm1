@@ -21,13 +21,12 @@
 	
 	#region Parámetros
 	Param (
-		[Parameter(ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nombre de usuarios a excluir, separado por comas.")]
+		[Parameter(Position = 0, HelpMessage = "Nombre de usuarios a excluir, separado por comas.")]
 		[Array]$Exclude,
-		[Parameter(ValueFromPipeline = $true, Position = 1, ValueFromPipelineByPropertyName = $true, HelpMessage = "Si se establece se eliminarán todos los usuarios, utilice 'Exclude'.")]
+		[Parameter(Position = 1, HelpMessage = "Si se establece se eliminarán todos los usuarios, utilice 'Exclude'.")]
 		[Switch]$All = $false
 	)
 	#endregion
-	
 	#Se obtiene la lista de usuarios
 	$Users = (Get-WmiObject -Class win32_UserAccount).Name
 	if (!($All))
@@ -36,16 +35,16 @@
 	}
 	try
 	{
-		for ($i = 0; $i -lt $Users.Length; $i++)
+		foreach ($User in $Users)
 		{
-			if (!($Exclude.Contains($Users[$i])))
+			if (!($Exclude.Contains($User)))
 			{
-				Remove-User $Users[$i]
+				Remove-User $User
 			}
 		}
 	}
 	catch
 	{
-		Show-MessageBox -Message "$_" -Title "Error" | Out-Null
+		Write-Error -Message "$_"
 	}
 }

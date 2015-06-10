@@ -39,7 +39,7 @@
 		}
 		Catch
 		{
-			Show-MessageBox -Message "$_" -Title "Error" -Type Error | Out-Null
+			Write-Error -Message "$_"
 		}
 	}
 }
