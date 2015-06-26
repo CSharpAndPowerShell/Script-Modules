@@ -20,14 +20,14 @@
 	#region "Parámetros"
 	param
 	(
-		[parameter]
-		[[ValidateNotNullOrEmpty()]]
+		[parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0, ValueFromPipelineByPropertyName = $true)]
+		[ValidateNotNullOrEmpty()]
 		[String]$Path,
-		[parameter]
+		[parameter(Mandatory = $false, ValueFromPipeline = $true, Position = 1, ValueFromPipelineByPropertyName = $true)]
 		[String]$Delimiter = ";",
-		[parameter]
+		[parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 2, ValueFromPipelineByPropertyName = $true)]
 		[String]$Value,
-		[parameter]
+		[parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 3, ValueFromPipelineByPropertyName = $true)]
 		[String]$NewValue
 	)
 	#endregion
