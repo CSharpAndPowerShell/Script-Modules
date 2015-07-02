@@ -15,7 +15,7 @@
     Escrito por Cristopher Robles y Leider Rivera Martínez
  
     .LINK
-    https://github.com/PowerShellScripting
+    https://github.com/CSharpAndPowerShell/Script-Modules
     #>
 	#region "Parámetros"
 	Param

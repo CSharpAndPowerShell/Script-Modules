@@ -15,7 +15,7 @@
     Escrito por Cristopher Robles
 	
     .LINK
-    https://github.com/PowerShellScripting
+    https://github.com/CSharpAndPowerShell/Script-Modules
     #>
 	
 	(Get-Item -Path hklm:\software\Microsoft\Windows\CurrentVersion\Run).Property
