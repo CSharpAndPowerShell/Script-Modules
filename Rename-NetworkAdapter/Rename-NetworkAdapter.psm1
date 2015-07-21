@@ -26,6 +26,8 @@
 		[switch]$Wireless = $false,
 		[Parameter(Position = 0, HelpMessage = "Renombra la interfaz Bluetooth.")]
 		[switch]$Bluetooth = $false,
+		[Parameter(Position = 0, HelpMessage = "Renombra la interfaz Bucle.")]
+		[switch]$Bucle = $false,
 		[Parameter(Mandatory = $True, Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "Nuevo nombre de el adaptador.")]
 		[ValidateNotNullOrEmpty()]
 		[String]$Name
@@ -94,6 +96,29 @@
 				{
 					{
 						($AdapName.Contains("Bluetooth"))
+					} {
+						$Adapter.NetConnectionID = $Name
+						try
+						{
+							$Adapter.Put() | Out-Null
+						}
+						catch
+						{
+							Write-Error "No ha sido posible cambiar de nombre a la interfaz."
+						}
+					}
+				}
+			}
+		}
+		if ($Bucle)
+		{
+			foreach ($Adapter in $Adapters)
+			{
+				$AdapName = $Adapter.Name
+				switch ($AdapName)
+				{
+					{
+						($AdapName.Contains("bucle"))
 					} {
 						$Adapter.NetConnectionID = $Name
 						try
