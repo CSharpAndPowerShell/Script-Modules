@@ -36,23 +36,34 @@
 	Process
 	{
 		$Adapters = Get-WmiObject -Class Win32_NetworkAdapter -filter "AdapterType like 'Ethernet%' and not ServiceName like 'v%'" #v% excluye los nombres que comienzan con v, para no mostrar las interfaces virtuales
-		if ($Ethernet)
+		foreach ($Adapter in $Adapters)
 		{
-			foreach ($Adapter in $Adapters)
+			$AdapName = $Adapter.Name
+			switch ($AdapName)
 			{
-				$AdapName = $Adapter.Name
-				switch ($AdapName)
+				#Ethernet
 				{
+					($AdapName.Contains("GBE")) -or
+					($AdapName.Contains("Gigabit")) -or
+					($AdapName.Contains("Ethernet")) -or
+					($AdapName.Contains("Wired"))
+				} {
+					if ($Ethernet)
 					{
-						($AdapName.Contains("GBE")) -or
-						($AdapName.Contains("Gigabit")) -or
-						($AdapName.Contains("Ethernet")) -or
-						($AdapName.Contains("Wired"))
-					} {
-						$Adapter.NetConnectionID = $Name
 						try
 						{
-							$Adapter.Put() | Out-Null
+							$i = 1;
+							if ($i > 1)
+							{
+								$tmpName = $Name + " " + $i
+								$Adapter.NetConnectionID = $tmpName
+								$Adapter.Put() | Out-Null
+							}
+							else
+							{
+								$Adapter.NetConnectionID = $Name
+								$Adapter.Put() | Out-Null
+							}
 						}
 						catch
 						{
@@ -60,24 +71,28 @@
 						}
 					}
 				}
-			}
-		}
-		if ($Wireless)
-		{
-			foreach ($Adapter in $Adapters)
-			{
-				$AdapName = $Adapter.Name
-				switch ($AdapName)
+				#Wireless
 				{
+					($AdapName.Contains("Wireless")) -or
+					($AdapName.Contains("WiFi")) -or
+					($AdapName.Contains("802.11"))
+				} {
+					if ($Wireless)
 					{
-						($AdapName.Contains("Wireless")) -or
-						($AdapName.Contains("WiFi")) -or
-						($AdapName.Contains("802.11"))
-					} {
-						$Adapter.NetConnectionID = $Name
 						try
 						{
-							$Adapter.Put() | Out-Null
+							$i = 1;
+							if ($i > 1)
+							{
+								$tmpName = $Name + " " + $i
+								$Adapter.NetConnectionID = $tmpName
+								$Adapter.Put() | Out-Null
+							}
+							else
+							{
+								$Adapter.NetConnectionID = $Name
+								$Adapter.Put() | Out-Null
+							}
 						}
 						catch
 						{
@@ -85,22 +100,27 @@
 						}
 					}
 				}
-			}
-		}
-		if ($Bluetooth)
-		{
-			foreach ($Adapter in $Adapters)
-			{
-				$AdapName = $Adapter.Name
-				switch ($AdapName)
+				#Bluetooth
 				{
+					($AdapName.Contains("Bluetooth")) -or
+					($AdapName.Contains("802.15.1"))
+				} {
+					if ($Bluetooth)
 					{
-						($AdapName.Contains("Bluetooth"))
-					} {
-						$Adapter.NetConnectionID = $Name
 						try
 						{
-							$Adapter.Put() | Out-Null
+							$i = 1;
+							if ($i > 1)
+							{
+								$tmpName = $Name + " " + $i
+								$Adapter.NetConnectionID = $tmpName
+								$Adapter.Put() | Out-Null
+							}
+							else
+							{
+								$Adapter.NetConnectionID = $Name
+								$Adapter.Put() | Out-Null
+							}
 						}
 						catch
 						{
@@ -108,22 +128,27 @@
 						}
 					}
 				}
-			}
-		}
-		if ($Bucle)
-		{
-			foreach ($Adapter in $Adapters)
-			{
-				$AdapName = $Adapter.Name
-				switch ($AdapName)
+				#Bucle
 				{
+					($AdapName.Contains("bucle")) -or
+					($AdapName.Contains("KM-TEST"))
+				} {
+					if ($Bucle)
 					{
-						($AdapName.Contains("bucle"))
-					} {
-						$Adapter.NetConnectionID = $Name
 						try
 						{
-							$Adapter.Put() | Out-Null
+							$i = 1;
+							if ($i > 1)
+							{
+								$tmpName = $Name + " " + $i
+								$Adapter.NetConnectionID = $tmpName
+								$Adapter.Put() | Out-Null
+							}
+							else
+							{
+								$Adapter.NetConnectionID = $Name
+								$Adapter.Put() | Out-Null
+							}
 						}
 						catch
 						{
