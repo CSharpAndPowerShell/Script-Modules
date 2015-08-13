@@ -16,7 +16,7 @@ Author = 'crisrc012'
 CompanyName = ''
 
 # Copyright statement for this module
-Copyright = '(c) 2015. All rights reserved.'
+Copyright = 'Copyright (C) 2015  Cristopher Robles Ríos'
 
 # Description of the functionality provided by this module
 Description = 'Registrar un programa para que arranque automaticamente en el siguiente inicio de sesión de cualquier usuario por siempre, hasta que se elimine; usar "Remove-AutoStart".'

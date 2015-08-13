@@ -17,7 +17,7 @@ Author = 'crisrc012'
 CompanyName = ''
 
 # Copyright statement for this module
-Copyright = '(c) 2015. All rights reserved.'
+Copyright = 'Copyright (C) 2015  Cristopher Robles Ríos'
 
 # Description of the functionality provided by this module
 Description = 'Devuelve lista de programas que se ejecutan al arranque.'

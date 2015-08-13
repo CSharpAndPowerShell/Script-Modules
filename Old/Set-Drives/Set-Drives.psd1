@@ -16,7 +16,7 @@ Author = 'crisrc012'
 CompanyName = ''
 
 # Copyright statement for this module
-Copyright = '(c) 2015. All rights reserved.'
+Copyright = 'Copyright (C) 2015  Cristopher Robles Ríos'
 
 # Description of the functionality provided by this module
 Description = 'Restringe el acceso u oculta las unidades seleccionadas, al ocultar no se muestran las unidades en "Equipo", al restringir no se permite al acceso a las unidades.'
